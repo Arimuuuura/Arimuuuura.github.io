@@ -23,7 +23,7 @@ const btn = document.getElementById("btn");
 async function callApi(placeData) {
     // 実際にAPIをたたく処理
     // fetch という window オブジェクトがあらかじめ持っている関数を使う
-    const res = await window.fetch("http://api.openweathermap.org/data/2.5/weather?zip=" + placeData + ",jp&appid=8f241f6e111e93a94a517a3c6477329e&lang=ja&units=metric");
+    const res = await window.fetch("https://api.openweathermap.org/data/2.5/weather?zip=" + placeData + ",jp&appid=8f241f6e111e93a94a517a3c6477329e&lang=ja&units=metric");
     const api_ob = await res.json();
     return api_ob;
 }
