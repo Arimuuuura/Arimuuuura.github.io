@@ -3,10 +3,50 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>WeatherAPI</title>
+    <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-    <p>Chrome DevTool で console を開いてね</p>
+    <div class="wrap">
+        <div class="input-area">
+            <!-- <div class="target-city">
+                <div class="city">茨城</div>
+                <div class="city">栃木</div>
+                <div class="city">群馬</div>
+                <div class="city">埼玉</div>
+                <div class="city">東京(渋谷)</div>
+                <div class="city">千葉</div>
+                <div class="city">神奈川</div>
+                <div class="city">九州</div>
+                <div class="city">沖縄</div>
+            </div> -->
+            <input type="text" id="target" placeholder="100-0000">
+            <div id="btn" class="disabled">検索</div>
+        </div>
+        <div class="main">
+            <div class="place">
+                <h3 id="places">場所</h3>
+            </div>
+            <div class="weather">
+                <img src="" alt="" id="icon">
+                <p id="weathers"></p>
+                <p id="temp"></p>
+                <p id="min_temp"></p>
+                <p id="max_temp"></p>
+                <p id="feel_temp"></p>
+                <p id="humidity"></p>
+                <p id="pressure"></p>
+                <p id="clouds"></p>
+                <p id="sunrise"></p>
+                <p id="sunset"></p>
+                <p id="speed"></p>
+                <p id="deg"></p>
+                <p id="gust" class="hidden"></p>
+            </div>
+        </div>
+    </div>
+    <div id="lists">
+    </div>
     <script src="main.js"></script>
 </body>
 </html>

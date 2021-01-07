@@ -70,7 +70,10 @@ async function listApi(placeData) {
     } else {
         deg.textContent = "風向 ： 北風";
     }
-    gust.textContent = `突風： ${winds.gust} m/s`;
+    if (winds.gust != undefined) {
+        gust.classList.remove('hidden');
+        gust.textContent = `突風： ${winds.gust} m/s`;
+    }
 }
 
 btn.addEventListener('click', () => {
