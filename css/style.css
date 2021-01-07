@@ -1,0 +1,58 @@
+body {
+    background: #ccc;
+    font-size: 16px;
+    font-family: Arial, sans-serif;
+}
+
+#btn {
+    cursor: pointer;
+    display: inline-block;
+    box-sizing: border-box;
+    width: 110px;
+    height: 40px;
+    padding: 10px;
+    background: blue;
+    border-radius: 5px;
+    font-size: 14px;
+    text-align: center;
+    color: white;
+}
+
+#btn.disabled {
+    opacity: 0.3;
+}
+
+#target {
+    font-size: 14px;
+    box-sizing: border-box;
+    padding: 10px;
+    height: 40px;
+    border-radius: 5px;
+    border: none;
+    margin-right: 10px;
+}
+
+.hidden {
+    display: none;
+}
+
+/* .target-city {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.city {
+    width: 110px;
+    height: 40px;
+    background: orange;
+    border-radius: 5px;
+    text-align: center;
+    line-height: 40px;
+    margin: 0 10px 10px 0;
+    color: white;
+    cursor: pointer;
+}
+
+.city:hover {
+    opacity: 0.5;
+} */
