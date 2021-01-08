@@ -18,19 +18,51 @@ const speed = document.getElementById("speed");
 const deg = document.getElementById("deg");
 const gust = document.getElementById("gust");
 const target = document.getElementById("target");
+const target2 = document.getElementById("target2");
 const btn = document.getElementById("btn");
+const clear = document.getElementById("clear");
+const city = document.getElementById('city');
 
-async function callApi(placeData) {
+function checkInput() {
+    // 正規表現で入力チェック
+    // 正規表現にマッチしなかったら null を返す
+    if (target.value.match(/^[1-9][0-9]{2}$/) !== null) {
+        target2.focus();
+        if (target2.value.match(/^[0-9]{4}$/) !== null) {
+            btn.classList.remove('disabled');
+        }
+    } else {
+        btn.classList.add('disabled');
+    }
+}
+
+async function zipcodeApi(zipData) {
     // 実際にAPIをたたく処理
     // fetch という window オブジェクトがあらかじめ持っている関数を使う
-    const res = await window.fetch("https://api.openweathermap.org/data/2.5/weather?zip=" + placeData + ",jp&appid=8f241f6e111e93a94a517a3c6477329e&lang=ja&units=metric");
+    const res = await window.fetch("https://api.openweathermap.org/data/2.5/weather?zip=" + zipData + ",jp&appid=8f241f6e111e93a94a517a3c6477329e&lang=ja&units=metric");
     const api_ob = await res.json();
     return api_ob;
 }
 
+async function zipCall(zipData) {
+    const apis = await zipcodeApi(zipData);
+    getData(apis);
+}
 
-async function listApi(placeData) {
-    const apis = await callApi(placeData);
+async function cityApi(cityData) {
+    // 実際にAPIをたたく処理
+    // fetch という window オブジェクトがあらかじめ持っている関数を使う
+    const res = await window.fetch("https://api.openweathermap.org/data/2.5/weather?q=" + cityData + ",jp&appid=8f241f6e111e93a94a517a3c6477329e&lang=ja&units=metric");
+    const api_ob = await res.json();
+    return api_ob;
+}
+
+async function cityCall(cityData) {
+    const apis = await cityApi(cityData);
+    getData(apis);
+}
+
+const getData = (apis) => {
     const weatherArry = apis.weather[0];
     const mainArry = apis.main;
     const sysArry = apis.sys;
@@ -39,7 +71,7 @@ async function listApi(placeData) {
     const cloud = apis.clouds;
 
     places.textContent = `${place}`;
-    img.src = "http://openweathermap.org/img/wn/" + weatherArry.icon + "@2x.png";
+    img.src = "https://openweathermap.org/img/wn/" + weatherArry.icon + "@2x.png";
     weathers.textContent = `${weatherArry.description}`;
     temp.textContent = `現在の気温： ${mainArry.temp} °C`;
     min_temp.textContent = `最低気温： ${mainArry.temp_min} °C`;
@@ -76,13 +108,26 @@ async function listApi(placeData) {
     }
 }
 
+target.addEventListener('keyup', checkInput);
+target2.addEventListener('keyup', checkInput);
+
+city.addEventListener('change', () => {
+    const num = city.selectedIndex;
+    const cityData = city[num].value;
+    cityCall(cityData);
+})
+
 btn.addEventListener('click', () => {
-    const placeData = target.value;
-    listApi(placeData);
+    const zipData = `${target.value}-${target2.value}`;
+    zipCall(zipData);
+})
+
+clear.addEventListener('click', () => {
+    location.reload();
 })
 
 window.addEventListener('load', () => {
-    const placeData = "150-0002";
-    listApi(placeData);
+    const cityData = "Tokyo";
+    cityCall(cityData);
 })
 target.focus();

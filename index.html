@@ -9,23 +9,28 @@
 <body>
     <div class="wrap">
         <div class="input-area">
-            <!-- <div class="target-city">
-                <div class="city">茨城</div>
-                <div class="city">栃木</div>
-                <div class="city">群馬</div>
-                <div class="city">埼玉</div>
-                <div class="city">東京(渋谷)</div>
-                <div class="city">千葉</div>
-                <div class="city">神奈川</div>
-                <div class="city">九州</div>
-                <div class="city">沖縄</div>
-            </div> -->
-            <input type="text" id="target" placeholder="100-0000">
+            <p>場所で検索</p>
+            <div id="target-city">
+                <select name="" id="city">
+                    <option value="Hokkaido">北海道</option>
+                    <option value="Sendai">仙台</option>
+                    <option value="Tokyo" selected>東京</option>
+                    <option value="Nagoya">名古屋</option>
+                    <option value="Osaka">大阪</option>
+                    <option value="Fukuoka">福岡</option>
+                    <option value="Okinawa">沖縄</option>
+                </select>
+            </div>
+            <p>郵便番号で検索</p>
+            <input type="text" id="target" placeholder="100">
+            <span>-</span>
+            <input type="text" id="target2" placeholder="0000">
             <div id="btn" class="disabled">検索</div>
+            <div id="clear"" class="disabled">クリア</div>
         </div>
         <div class="main">
             <div class="place">
-                <h3 id="places">場所</h3>
+                <h3 id="places"></h3>
             </div>
             <div class="weather">
                 <img src="" alt="" id="icon">

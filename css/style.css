@@ -4,55 +4,58 @@ body {
     font-family: Arial, sans-serif;
 }
 
-#btn {
+#btn,#clear {
     cursor: pointer;
     display: inline-block;
     box-sizing: border-box;
     width: 110px;
-    height: 40px;
-    padding: 10px;
-    background: blue;
+    height: 30px;
     border-radius: 5px;
     font-size: 14px;
+    line-height: 30px;
     text-align: center;
     color: white;
+    margin-left: 20px;
+}
+
+#btn {
+    background: blue;
+}
+
+#clear {
+    background: rgb(109, 180, 1);
 }
 
 #btn.disabled {
     opacity: 0.3;
 }
 
-#target {
+#target,#target2 {
     font-size: 14px;
     box-sizing: border-box;
     padding: 10px;
-    height: 40px;
+    width: 110px;
+    height: 30px;
     border-radius: 5px;
     border: none;
-    margin-right: 10px;
+    margin-right: 5px;
+}
+
+span {
+    margin-right: 5px;
 }
 
 .hidden {
     display: none;
 }
 
-/* .target-city {
+.target-city {
     display: flex;
     flex-wrap: wrap;
 }
 
-.city {
-    width: 110px;
-    height: 40px;
-    background: orange;
-    border-radius: 5px;
-    text-align: center;
-    line-height: 40px;
-    margin: 0 10px 10px 0;
-    color: white;
-    cursor: pointer;
+#city {
+    width: 200px;
+    height: 30px;
+    margin-bottom: 10px;
 }
-
-.city:hover {
-    opacity: 0.5;
-} */
