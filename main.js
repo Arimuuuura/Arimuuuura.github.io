@@ -18,7 +18,22 @@ const speed = document.getElementById("speed");
 const deg = document.getElementById("deg");
 const gust = document.getElementById("gust");
 const target = document.getElementById("target");
+const target2 = document.getElementById("target2");
 const btn = document.getElementById("btn");
+const clear = document.getElementById("clear");
+
+function checkInput() {
+    // 正規表現で入力チェック
+    // 正規表現にマッチしなかったら null を返す
+    if (target.value.match(/^[1-9][0-9]{2}$/) !== null) {
+        target2.focus();
+        if (target2.value.match(/^[0-9]{4}$/) !== null) {
+            btn.classList.remove('disabled');
+        }
+    } else {
+        btn.classList.add('disabled');
+    }
+}
 
 async function callApi(placeData) {
     // 実際にAPIをたたく処理
@@ -76,9 +91,16 @@ async function listApi(placeData) {
     }
 }
 
+target.addEventListener('keyup', checkInput);
+target2.addEventListener('keyup', checkInput);
+
 btn.addEventListener('click', () => {
-    const placeData = target.value;
+    const placeData = `${target.value}-${target2.value}`;
     listApi(placeData);
+})
+
+clear.addEventListener('click', () => {
+    location.reload();
 })
 
 window.addEventListener('load', () => {
