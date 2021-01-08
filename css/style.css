@@ -49,23 +49,13 @@ span {
     display: none;
 }
 
-/* .target-city {
+.target-city {
     display: flex;
     flex-wrap: wrap;
 }
 
-.city {
-    width: 110px;
-    height: 40px;
-    background: orange;
-    border-radius: 5px;
-    text-align: center;
-    line-height: 40px;
-    margin: 0 10px 10px 0;
-    color: white;
-    cursor: pointer;
+#city {
+    width: 200px;
+    height: 30px;
+    margin-bottom: 10px;
 }
-
-.city:hover {
-    opacity: 0.5;
-} */
