@@ -1,30 +1,31 @@
-body {
-    background: #ccc;
+body,p {
     font-size: 16px;
     font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
 }
 
 #btn,#clear {
     cursor: pointer;
     display: inline-block;
     box-sizing: border-box;
-    width: 110px;
-    height: 30px;
+    /* width: 70px; */
+    /* height: 30px; */
     border-radius: 5px;
     font-size: 14px;
     line-height: 30px;
     text-align: center;
     color: white;
-    margin-left: 20px;
+    /* margin-left: 20px; */
 }
 
-#btn {
+/* #btn {
     background: blue;
-}
+} */
 
-#clear {
+/* #clear {
     background: rgb(109, 180, 1);
-}
+} */
 
 #btn.disabled {
     opacity: 0.3;
@@ -34,11 +35,9 @@ body {
     font-size: 14px;
     box-sizing: border-box;
     padding: 10px;
-    width: 110px;
+    width: 70px;
     height: 30px;
     border-radius: 5px;
-    border: none;
-    margin-right: 5px;
 }
 
 span {
@@ -49,13 +48,17 @@ span {
     display: none;
 }
 
-.target-city {
-    display: flex;
-    flex-wrap: wrap;
+.select {
+    /* width: 100px; */
+    height: 30px;
+    border-radius: 5px;
+    text-align: center;
+    line-height: 30px;
+    cursor: pointer;
+    background: lavender;
 }
 
-#city {
-    width: 200px;
-    height: 30px;
-    margin-bottom: 10px;
+.weeklyimg {
+    width: 40px;
+    height: 40px;
 }
