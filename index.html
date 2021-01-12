@@ -4,52 +4,135 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>WeatherAPI</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-    <div class="wrap">
-        <div class="input-area">
-            <p>場所で検索</p>
-            <div id="target-city">
-                <select name="" id="city">
-                    <option value="Hokkaido">北海道</option>
-                    <option value="Sendai">仙台</option>
-                    <option value="Tokyo" selected>東京</option>
-                    <option value="Nagoya">名古屋</option>
-                    <option value="Osaka">大阪</option>
-                    <option value="Fukuoka">福岡</option>
-                    <option value="Okinawa">沖縄</option>
-                </select>
+    <header>
+        <div class="container">
+            <div class="input-area pb-5">
+                <h5>郵便番号で検索</h5>
+                <div class="row mb-3">
+                    <div class="col">
+                        <input type="text" id="target" placeholder="100">
+                    </div>
+                        <span>-</span>
+                    <div class="col">
+                        <input type="text" id="target2" placeholder="0000">
+                    </div>
+                    <div id="btn" class="col bg-primary disabled">
+                        検索
+                    </div>
+                </div>
+                <h5>都道府県で検索</h5>
+                <div class="row mb-3">
+                    <div class="col">
+                        <div id="select1" class="select">東日本</div>
+                        <select name="" id="city1" class="city col progress hidden" style="height: 30px;">
+                            <option value="1850144">未選択</option>
+                            <option value="2130037">北海道</option>
+                            <option value="2130656">青森</option>
+                            <option value="2113124">秋田</option>
+                            <option value="2112518">岩手</option>
+                            <option value="2111888">宮城</option>
+                            <option value="2110554">山形</option>
+                            <option value="2112922">福島</option>
+                            <option value="2112669">茨城</option>
+                            <option value="1850310">栃木</option>
+                            <option value="1863501">群馬</option>
+                            <option value="1853226">埼玉</option>
+                            <option value="1850144" selected>東京</option>
+                            <option value="2113014">千葉</option>
+                            <option value="1860291">神奈川</option>
+                            <option value="1855429">新潟</option>
+                            <option value="1849872">富山</option>
+                            <option value="1861387">石川</option>
+                            <option value="1863983">福井</option>
+                            <option value="1848649">山梨</option>
+                            <option value="1851715">静岡</option>
+                            <option value="1856210">長野</option>
+                            <option value="1863640">岐阜</option>
+                            <option value="1865694">愛知</option>
+                        </select>
+                    </div>
+                    <div class="col">
+                        <div id="select2" class="select">西日本</div>
+                        <select name="" id="city2" class="city col progress hidden" style="height: 30px;">
+                            <option value="1850144">未選択</option>
+                            <option value="1857907">京都府</option>
+                            <option value="1853904">大阪府</option>
+                            <option value="1852553">滋賀</option>
+                            <option value="1857352">三重</option>
+                            <option value="1855608">奈良</option>
+                            <option value="1848938">和歌山</option>
+                            <option value="1862047">兵庫</option>
+                            <option value="1849890">鳥取</option>
+                            <option value="1852442">島根</option>
+                            <option value="1854381">岡山</option>
+                            <option value="1862413">広島</option>
+                            <option value="1848681">山口</option>
+                            <option value="1860834">香川</option>
+                            <option value="1850157">徳島</option>
+                            <option value="1864226">愛媛</option>
+                            <option value="1859133">高知</option>
+                            <option value="1863958">福岡</option>
+                            <option value="1854484">大分</option>
+                            <option value="1853299">佐賀</option>
+                            <option value="1856156">長崎</option>
+                            <option value="1856710">宮崎</option>
+                            <option value="1858419">熊本</option>
+                            <option value="1860825">鹿児島</option>
+                            <option value="1854345">沖縄</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="row">
+                    <div id="clear"" class="col-6 mx-auto bg-success disabled">クリア</div>
+                </div>
             </div>
-            <p>郵便番号で検索</p>
-            <input type="text" id="target" placeholder="100">
-            <span>-</span>
-            <input type="text" id="target2" placeholder="0000">
-            <div id="btn" class="disabled">検索</div>
-            <div id="clear"" class="disabled">クリア</div>
+        </header>
+        <main>
+            <div class="container">
+                <div class="row mx-auto pb-4"> <!--場所-->
+                    <h3 id="places" class="mx-auto"></h3>
+                </div>
+                <div class="row"> <!--天気-->
+                    <h5 id="weathers" class="mx-auto"></h5>
+                </div>
+                <div class="row"> <!--アイコン-->
+                    <img src="" alt="" id="icon" class="mx-auto">
+                </div>
+                <div class="row mx-auto"> <!--気温-->
+                    <h5 id="temp" class="mx-auto"></h5>
+                </div>
+                <div class="row"> <!--最低、最高、体感温度-->
+                    <p id="min_temp" class="col text-primary"></p>
+                    <p id="max_temp" class="col text-danger"></p>
+                    <p id="feel_temp" class="col text-success"></p>
+                </div>
+                <div id="weekly" class="row bg-success">
+                    <section>
+                        <p>時間</p>
+                        <p>アイコン</p>
+                        <p>気温</p>
+                        <p>湿度</p>
+                        <p>風速</p>
+                    </section>
+                </div>
+                <div class="row"> <!--湿度、気圧、雲量、日の出、日の入り、風速、風向-->
+                    <p id="humidity"></p>
+                    <p id="pressure"></p>
+                    <p id="clouds"></p>
+                    <p id="sunrise"></p>
+                    <p id="sunset"></p>
+                    <p id="speed"></p>
+                    <p id="deg"></p>
+                    <p id="gust" class="hidden"></p>
+                    <p id="visibility"></p>
+                </div>
+            </div>
+        </main>
         </div>
-        <div class="main">
-            <div class="place">
-                <h3 id="places"></h3>
-            </div>
-            <div class="weather">
-                <img src="" alt="" id="icon">
-                <p id="weathers"></p>
-                <p id="temp"></p>
-                <p id="min_temp"></p>
-                <p id="max_temp"></p>
-                <p id="feel_temp"></p>
-                <p id="humidity"></p>
-                <p id="pressure"></p>
-                <p id="clouds"></p>
-                <p id="sunrise"></p>
-                <p id="sunset"></p>
-                <p id="speed"></p>
-                <p id="deg"></p>
-                <p id="gust" class="hidden"></p>
-            </div>
-        </div>
-    </div>
     <div id="lists">
     </div>
     <script src="main.js"></script>
