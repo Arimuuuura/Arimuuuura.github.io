@@ -29,6 +29,7 @@ const select1 = document.getElementById('select1');
 const select2 = document.getElementById('select2');
 // const city = document.querySelector('.city');
 const weekly = document.getElementById("weekly");
+const arimura = document.getElementById("arimura");
 
 function checkInput() {
     // 正規表現で入力チェック
@@ -70,6 +71,8 @@ async function weekcityApi(cityData) {
     // const res = await window.fetch("https://api.openweathermap.org/data/2.5/weather?id=" + cityData + "&appid=8f241f6e111e93a94a517a3c6477329e&lang=ja&units=metric");
     const res = await window.fetch("https://api.openweathermap.org/data/2.5/forecast?id=" + cityData + "&appid=8f241f6e111e93a94a517a3c6477329e&lang=ja&units=metric");
     const api_ob = await res.json();
+    console.log(api_ob);
+    
     return api_ob;
 }
 
@@ -84,30 +87,68 @@ async function cityweekCall(cityData) {
 }
 
 const getweekData = (weekapis) => {
-    const section = document.createElement("section");
-    const icon = weekapis.list[0].weather[0].icon
-    this.time = document.createElement("p");
-    this.time.textContent = `${new Date(weekapis.list[0].dt * 1000).getHours()}時`;
+    const wrapdiv = document.createElement("div");
 
-    this.img = document.createElement("img");
-    this.img.classList.add('weeklyimg');
-    this.img.src = "http://openweathermap.org/img/wn/" + icon + "@2x.png";
+    const newDiv = document.createElement("div");
+    const time = document.createElement("p");
+    const weather = document.createElement("p");
+    const temp = document.createElement("p");
+    const humidity = document.createElement("p");
+    const wind = document.createElement("p");
+    time.textContent = "時間";
+    weather.textContent = "天気";
+    temp.textContent = "気温";
+    humidity.textContent = "湿度";
+    wind.textContent = "風速";
+    newDiv.appendChild(time);
+    newDiv.appendChild(weather);
+    newDiv.appendChild(temp);
+    newDiv.appendChild(humidity);
+    newDiv.appendChild(wind);
+    weather.classList.add('weeklyimg');
+    newDiv.classList.add('guide');
+    wrapdiv.appendChild(newDiv);
 
-    this.temp = document.createElement("p");
-    this.temp.textContent = `${Math.floor(weekapis.list[0].main.temp * 10) / 10}°C`;
+    for (let i=0; i<40; i++) {
+        const div = document.createElement("div");
+        const icon = weekapis.list[i].weather[0].icon;
+        const daylyTime = new Date(weekapis.list[i].dt * 1000).getHours();
+        if (i<=8) {
+            this.time = document.createElement("p");
+            this.time.textContent = `${new Date(weekapis.list[i].dt * 1000).getHours()}時`;
 
-    this.humidity = document.createElement("p");
-    this.humidity.textContent = `${weekapis.list[0].main.humidity}%`;
+            this.img = document.createElement("img");
+            this.img.classList.add('weeklyimg');
+            this.img.src = "http://openweathermap.org/img/wn/" + icon + "@2x.png";
 
-    this.wind = document.createElement("p");
-    this.wind.textContent = `${Math.floor(weekapis.list[0].wind.speed * 10) / 10}m/s`;
+            this.temp = document.createElement("p");
+            this.temp.textContent = `${Math.floor(weekapis.list[i].main.temp * 10) / 10}°C`;
 
-    section.appendChild(this.time);
-    section.appendChild(this.img);
-    section.appendChild(this.temp);
-    section.appendChild(this.humidity);
-    section.appendChild(this.wind);
-    weekly.appendChild(section);
+            this.humidity = document.createElement("p");
+            this.humidity.textContent = `${weekapis.list[i].main.humidity}%`;
+
+            this.wind = document.createElement("p");
+            this.wind.textContent = `${Math.floor(weekapis.list[i].wind.speed * 10) / 10}m/s`;
+            wrapdiv.appendChild(div);
+            wrapdiv.classList.add('dayly-wrap');
+            div.classList.add('dayly-weather');
+            div.appendChild(this.time);
+            div.appendChild(this.img);
+            div.appendChild(this.temp);
+            div.appendChild(this.humidity);
+            div.appendChild(this.wind);
+            // weekly.appendChild(getDayly);
+            weekly.appendChild(wrapdiv);
+        }
+        if (daylyTime == 12) {
+            // console.log(daylyTime);
+            console.log(weekapis.list[i].weather[0].description);
+            console.log(Math.floor(weekapis.list[i].main.temp * 10) / 10);
+        }
+        // console.log(weekapis.list[i].dt);
+        // console.log(i);
+    }
+
 }
 
 const getData = (apis) => {
