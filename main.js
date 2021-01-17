@@ -14,23 +14,20 @@ const pressure = document.getElementById("pressure");
 const clouds = document.getElementById("clouds");
 const sunrise = document.getElementById("sunrise");
 const sunset = document.getElementById("sunset");
-const speed = document.getElementById("speed");
-const deg = document.getElementById("deg");
+const wind = document.getElementById("wind");
 const gust = document.getElementById("gust");
 const visibility = document.getElementById("visibility");
 const target = document.getElementById("target");
 const target2 = document.getElementById("target2");
 const btn = document.getElementById("btn");
 const clear = document.getElementById("clear");
-const city1 = document.getElementById('city1');
-const city2 = document.getElementById('city2');
-// const select = document.querySelector('.select');
-const select1 = document.getElementById('select1');
-const select2 = document.getElementById('select2');
-// const city = document.querySelector('.city');
+const city = document.getElementById('city');
 const weekly = document.getElementById("weekly");
 const arimura = document.getElementById("arimura");
+const yuuki = document.querySelector('.yuuki');
+const daylyWrap = document.querySelector('.dayly-wrap');
 
+// 郵便番号入力チェック
 function checkInput() {
     // 正規表現で入力チェック
     // 正規表現にマッチしなかったら null を返す
@@ -44,6 +41,7 @@ function checkInput() {
     }
 }
 
+// 郵便番号による現在の天気呼び出し
 async function zipcodeApi(zipData) {
     // 実際にAPIをたたく処理
     // fetch という window オブジェクトがあらかじめ持っている関数を使う
@@ -51,104 +49,98 @@ async function zipcodeApi(zipData) {
     const api_ob = await res.json();
     return api_ob;
 }
-
 async function zipCall(zipData) {
     const apis = await zipcodeApi(zipData);
     getData(apis);
 }
 
+// 郵便番号による週間天気の呼び出し
+async function weekzipApi(zipData) {
+    const res = await window.fetch("https://api.openweathermap.org/data/2.5/forecast?zip=" + zipData + ",jp&appid=8f241f6e111e93a94a517a3c6477329e&lang=ja&units=metric");
+    const api_ob = await res.json();
+    return api_ob;
+}
+async function zipweekCall(cityData) {
+    const weekapis = await weekzipApi(cityData);
+    getweekData(weekapis);
+}
+
+// 都市指定による現在の天気呼び出し
 async function cityApi(cityData) {
-    // 実際にAPIをたたく処理
-    // fetch という window オブジェクトがあらかじめ持っている関数を使う
     const res = await window.fetch("https://api.openweathermap.org/data/2.5/weather?id=" + cityData + "&appid=8f241f6e111e93a94a517a3c6477329e&lang=ja&units=metric");
     const api_ob = await res.json();
     return api_ob;
 }
-
-async function weekcityApi(cityData) {
-    // 実際にAPIをたたく処理
-    // fetch という window オブジェクトがあらかじめ持っている関数を使う
-    // const res = await window.fetch("https://api.openweathermap.org/data/2.5/weather?id=" + cityData + "&appid=8f241f6e111e93a94a517a3c6477329e&lang=ja&units=metric");
-    const res = await window.fetch("https://api.openweathermap.org/data/2.5/forecast?id=" + cityData + "&appid=8f241f6e111e93a94a517a3c6477329e&lang=ja&units=metric");
-    const api_ob = await res.json();
-    console.log(api_ob);
-    
-    return api_ob;
-}
-
 async function cityCall(cityData) {
     const apis = await cityApi(cityData);
     getData(apis);
 }
 
+// 都市指定による週間天気の呼び出し
+async function weekcityApi(cityData) {
+    const res = await window.fetch("https://api.openweathermap.org/data/2.5/forecast?id=" + cityData + "&appid=8f241f6e111e93a94a517a3c6477329e&lang=ja&units=metric");
+    const api_ob = await res.json();
+    return api_ob;
+}
 async function cityweekCall(cityData) {
     const weekapis = await weekcityApi(cityData);
     getweekData(weekapis);
 }
 
+
+const wrapdiv = document.createElement("div");
+const weekTime = document.createElement("p");
+const weekWeather = document.createElement("p");
+const weekTemp = document.createElement("p");
+const weekHumidity = document.createElement("p");
+const weekWind = document.createElement("p");
+
 const getweekData = (weekapis) => {
-    const wrapdiv = document.createElement("div");
-
-    const newDiv = document.createElement("div");
-    const time = document.createElement("p");
-    const weather = document.createElement("p");
-    const temp = document.createElement("p");
-    const humidity = document.createElement("p");
-    const wind = document.createElement("p");
-    time.textContent = "時間";
-    weather.textContent = "天気";
-    temp.textContent = "気温";
-    humidity.textContent = "湿度";
-    wind.textContent = "風速";
-    newDiv.appendChild(time);
-    newDiv.appendChild(weather);
-    newDiv.appendChild(temp);
-    newDiv.appendChild(humidity);
-    newDiv.appendChild(wind);
-    weather.classList.add('weeklyimg');
-    newDiv.classList.add('guide');
-    wrapdiv.appendChild(newDiv);
-
     for (let i=0; i<40; i++) {
         const div = document.createElement("div");
         const icon = weekapis.list[i].weather[0].icon;
+        // console.log(weekapis);
         const daylyTime = new Date(weekapis.list[i].dt * 1000).getHours();
         if (i<=8) {
-            this.time = document.createElement("p");
-            this.time.textContent = `${new Date(weekapis.list[i].dt * 1000).getHours()}時`;
+            this.weekTime = document.createElement("p");
+            this.weekTime.textContent = `${new Date(weekapis.list[i].dt * 1000).getHours()}時`;
 
             this.img = document.createElement("img");
             this.img.classList.add('weeklyimg');
             this.img.src = "http://openweathermap.org/img/wn/" + icon + "@2x.png";
 
-            this.temp = document.createElement("p");
-            this.temp.textContent = `${Math.floor(weekapis.list[i].main.temp * 10) / 10}°C`;
+            this.weekTemp = document.createElement("p");
+            this.weekTemp.textContent = `${Math.floor(weekapis.list[i].main.temp * 10) / 10}°C`;
 
-            this.humidity = document.createElement("p");
-            this.humidity.textContent = `${weekapis.list[i].main.humidity}%`;
+            this.weekHumidity = document.createElement("p");
+            this.weekHumidity.textContent = `${weekapis.list[i].main.humidity}%`;
 
-            this.wind = document.createElement("p");
-            this.wind.textContent = `${Math.floor(weekapis.list[i].wind.speed * 10) / 10}m/s`;
+            this.weekWind = document.createElement("p");
+            this.weekWind.textContent = `${Math.floor(weekapis.list[i].wind.speed * 10) / 10}m/s`;
             wrapdiv.appendChild(div);
             wrapdiv.classList.add('dayly-wrap');
             div.classList.add('dayly-weather');
-            div.appendChild(this.time);
+            div.appendChild(this.weekTime);
             div.appendChild(this.img);
-            div.appendChild(this.temp);
-            div.appendChild(this.humidity);
-            div.appendChild(this.wind);
-            // weekly.appendChild(getDayly);
+            div.appendChild(this.weekTemp);
+            div.appendChild(this.weekHumidity);
+            div.appendChild(this.weekWind);
             weekly.appendChild(wrapdiv);
         }
-        if (daylyTime == 12) {
-            // console.log(daylyTime);
-            console.log(weekapis.list[i].weather[0].description);
-            console.log(Math.floor(weekapis.list[i].main.temp * 10) / 10);
-        }
-        // console.log(weekapis.list[i].dt);
-        // console.log(i);
+        // if (daylyTime == 12) {
+        //     console.log(weekapis.list[i].weather[0].description);
+        //     console.log(Math.floor(weekapis.list[i].main.temp * 10) / 10);
+        //     lists.textContent = weekapis.list[i].weather[0].description;
+        //     this.tomorrow = document.createElement("p");
+        //     this.tomorrow.textContent = weekapis.list[i].weather[0].description;
+        // }
     }
+}
 
+const clearweekData = () => {
+    while (wrapdiv.firstChild) {
+        wrapdiv.removeChild(wrapdiv.firstChild);
+    }
 }
 
 const getData = (apis) => {
@@ -158,6 +150,7 @@ const getData = (apis) => {
     const sunriseTime = new Date(sysArry.sunrise * 1000);
     const sunsetTime = new Date(sysArry.sunset * 1000);
     const winds = apis.wind;
+    const speed = `${Math.floor(winds.speed * 10) / 10} m/s`;
     const place = apis.name;
     const cloud = apis.clouds;
     const view = apis.visibility;
@@ -169,87 +162,74 @@ const getData = (apis) => {
     min_temp.textContent = `最低 ${Math.floor(mainArry.temp_min * 10) / 10} °C`;
     max_temp.textContent = `最高 ${Math.floor(mainArry.temp_max * 10) / 10} °C`;
     feel_temp.textContent = `体感 ${Math.floor(mainArry.feels_like * 10) / 10} °C`;
-    humidity.textContent = `湿度： ${mainArry.humidity} %`;
-    pressure.textContent = `気圧： ${mainArry.pressure} hPa`;
-    clouds.textContent = `雲量： ${cloud.all} %`;
-    sunrise.textContent = `日の出： ${sunriseTime.getHours()}:${sunriseTime.getMinutes()}`;
-    sunset.textContent = `日の入り： ${sunsetTime.getHours()}:${sunsetTime.getMinutes()}`;
-    speed.textContent = `風速： ${winds.speed} m/s`;
+    humidity.textContent = `湿度 ${mainArry.humidity} %`;
+    pressure.textContent = `気圧 ${mainArry.pressure} hPa`;
+    clouds.textContent = `雲量 ${cloud.all} %`;
+    sunrise.textContent = `日の出 ${sunriseTime.getHours()}:${sunriseTime.getMinutes()}`;
+    sunset.textContent = `日の入り ${sunsetTime.getHours()}:${sunsetTime.getMinutes()}`;
     visibility.textContent = `視程 ${view} m`;
     if (winds.deg <= 30) {
-        deg.textContent = "風向 ： 北風";
+        wind.textContent = `北風 ${speed}`;
     } else if (winds.deg <= 60) {
-        deg.textContent = "風向 ： 北東風";
+        wind.textContent = `北東風 ${speed}`;
     } else if (winds.deg <= 120) {
-        deg.textContent = "風向 ： 東風";
+        wind.textContent = `東風 ${speed}`;
     } else if (winds.deg <= 150) {
-        deg.textContent = "風向 ： 南東風";
+        wind.textContent = `南東風 ${speed}`;
     } else if (winds.deg <= 210) {
-        deg.textContent = "風向 ： 南風";
+        wind.textContent = `南風 ${speed}`;
     } else if (winds.deg <= 240) {
-        deg.textContent = "風向 ： 南西風";
+        wind.textContent = `西風 ${speed}`;
     } else if (winds.deg <= 300) {
-        deg.textContent = "風向 ： 西風";
+        wind.textContent = `西風 ${speed}`;
     } else if (winds.deg <= 330) {
-        deg.textContent = "風向 ： 北西風";
+        wind.textContent = `西風 ${speed}`;
     } else {
-        deg.textContent = "風向 ： 北風";
+        wind.textContent = `北風 ${speed}`;
     }
     if (winds.gust != undefined) {
-        gust.classList.remove('hidden');
-        gust.textContent = `突風： ${winds.gust} m/s`;
+        // gust.classList.remove('hidden');
+        gust.textContent = `突風 ${winds.gust} m/s`;
+    } else {
+        gust.textContent = "突風情報なし";
     }
 }
 
+// 郵便番号の入力
 target.addEventListener('keyup', checkInput);
 target2.addEventListener('keyup', checkInput);
 
-select1.addEventListener('click', () => {
-    if (city1.classList.contains('hidden') == true) {
-        city1.classList.remove('hidden');
-    } else {
-        city1.classList.add('hidden');
-    }
-})
-
-city1.addEventListener('change', () => {
-    const num = city1.selectedIndex;
-    const cityData = city1[num].value;
+city.addEventListener('change', () => {
+    const num = city.selectedIndex;
+    const cityData = city[num].value;
+    clearweekData();
     cityCall(cityData);
+    cityweekCall(cityData);
 })
 
-select2.addEventListener('click', () => {
-    if (city2.classList.contains('hidden') == true) {
-        city2.classList.remove('hidden');
-    } else {
-        city2.classList.add('hidden');
-    }
-})
-
-city2.addEventListener('change', () => {
-    const num = city2.selectedIndex;
-    const cityData = city2[num].value;
-    cityCall(cityData);
-})
-
+// 郵便番号の検索ボタンをクリックした時のイベント
 btn.addEventListener('click', () => {
     if (btn.classList.contains('disabled') == true) {
         return
     }
     const zipData = `${target.value}-${target2.value}`;
+    clearweekData();
     zipCall(zipData);
+    zipweekCall(zipData);
 })
-
+// クリアボタンをクリックした時のイベント
 clear.addEventListener('click', () => {
     location.reload();
 })
-
+// ページを開いた際のイベント
 window.addEventListener('load', () => {
     const cityData = "1850144";
     cityCall(cityData);
-})
-window.addEventListener('load', () => {
-    const cityData = "1850144";
     cityweekCall(cityData);
 })
 target.focus();
+
+// arimura.addEventListener('click', () => {
+//     clearweekData();
+//     cityweekCall(1860825);
+// })
