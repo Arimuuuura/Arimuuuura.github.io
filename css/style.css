@@ -19,14 +19,6 @@ body,p {
     /* margin-left: 20px; */
 }
 
-/* #btn {
-    background: blue;
-} */
-
-/* #clear {
-    background: rgb(109, 180, 1);
-} */
-
 #btn.disabled {
     opacity: 0.3;
 }
@@ -48,16 +40,6 @@ span {
     display: none;
 }
 
-.select {
-    /* width: 100px; */
-    height: 30px;
-    border-radius: 5px;
-    text-align: center;
-    line-height: 30px;
-    cursor: pointer;
-    background: lavender;
-}
-
 .weeklyimg {
     width: 40px;
     height: 40px;
@@ -68,6 +50,7 @@ span {
 .dayly-wrap {
     display: flex;
     overflow: scroll;
+    min-width: 50px;
 }
 
 .dayly-weather {
@@ -80,4 +63,21 @@ span {
     width: 50px;
     margin: 0 5px;
     text-align: center;
+}
+
+#weekly {
+    display: flex;
+    flex-wrap: nowrap;
+	justify-content: unset;
+}
+
+.arimura {
+    display: flex;
+	flex-wrap: nowrap;
+	justify-content: unset;
+}
+
+.yuuki {
+    /* flex-wrap: nowrap; */
+    min-width: 30%;
 }

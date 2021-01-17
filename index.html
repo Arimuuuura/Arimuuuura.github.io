@@ -10,7 +10,7 @@
 <body>
     <header>
         <div class="container">
-            <div class="input-area pb-5">
+            <div class="input-area pb-4">
                 <h5>郵便番号で検索</h5>
                 <div class="row mb-3">
                     <div class="col">
@@ -26,9 +26,8 @@
                 </div>
                 <h5>都道府県で検索</h5>
                 <div class="row mb-3">
-                    <div class="col">
-                        <div id="select1" class="select">東日本</div>
-                        <select name="" id="city1" class="city col progress hidden" style="height: 30px;">
+                    <div id="select" class="col-6">
+                        <select name="" id="city" class="col progress" style="height: 30px;">
                             <option value="1850144">未選択</option>
                             <option value="2130037">北海道</option>
                             <option value="2130656">青森</option>
@@ -53,12 +52,6 @@
                             <option value="1856210">長野</option>
                             <option value="1863640">岐阜</option>
                             <option value="1865694">愛知</option>
-                        </select>
-                    </div>
-                    <div class="col">
-                        <div id="select2" class="select">西日本</div>
-                        <select name="" id="city2" class="city col progress hidden" style="height: 30px;">
-                            <option value="1850144">未選択</option>
                             <option value="1857907">京都府</option>
                             <option value="1853904">大阪府</option>
                             <option value="1852553">滋賀</option>
@@ -85,50 +78,134 @@
                             <option value="1854345">沖縄</option>
                         </select>
                     </div>
-                </div>
-                <div class="row">
-                    <div id="clear"" class="col-6 mx-auto bg-success disabled">クリア</div>
+                    <div id="clear"" class="col-3 mx-auto bg-success disabled">クリア</div>
                 </div>
             </div>
         </header>
         <main>
             <div class="container">
-                <div class="row mx-auto pb-4"> <!--場所-->
+                <div class="row mx-auto pb-3"> <!--場所-->
                     <h3 id="places" class="mx-auto"></h3>
                 </div>
-                <div class="row"> <!--天気-->
-                    <h5 id="weathers" class="mx-auto"></h5>
+                <div class="row">
+                    <div class="col"></div>
+                    <div class="col-4 mx-auto"> <!--天気-->
+                        <h6 id="weathers" class="text-center"></h6>
+                    </div>
+                    <div class="col-4 mx-auto"> <!--気温-->
+                        <h5 id="temp" class="text-center"></h5>
+                    </div>
+                    <div class="col"></div>
                 </div>
                 <div class="row"> <!--アイコン-->
                     <img src="" alt="" id="icon" class="mx-auto">
                 </div>
-                <div class="row mx-auto"> <!--気温-->
-                    <h5 id="temp" class="mx-auto"></h5>
+                <div id="weekly" class="row bg-success"> <!--5日分の天気-->
+                    <div class="dayly-guide">
+                        <div class="guide">
+                            <p>時間</p>
+                            <p class="weeklyimg">天気</p>
+                            <p>気温</p>
+                            <p>湿度</p>
+                            <p>風速</p>
+                        </div>
+                    </div>
+                </div>
+                <div id="lists">
+        
                 </div>
                 <div class="row"> <!--最低、最高、体感温度-->
-                    <p id="min_temp" class="col text-primary"></p>
-                    <p id="max_temp" class="col text-danger"></p>
-                    <p id="feel_temp" class="col text-success"></p>
+                    <h6 id="min_temp" class="col text-primary text-center"></h6>
+                    <h6 id="max_temp" class="col text-danger text-center"></h6>
+                    <h6 id="feel_temp" class="col text-success text-center"></h6>
                 </div>
-                <div id="weekly" class="row bg-success d-flex"> <!--5日分の天気-->
-                </div>
-                <div id="arimura"></div>
                 <div class="row"> <!--湿度、気圧、雲量、日の出、日の入り、風速、風向-->
-                    <p id="humidity"></p>
-                    <p id="pressure"></p>
-                    <p id="clouds"></p>
-                    <p id="sunrise"></p>
-                    <p id="sunset"></p>
-                    <p id="speed"></p>
-                    <p id="deg"></p>
-                    <p id="gust" class="hidden"></p>
-                    <p id="visibility"></p>
+                    <h6 id="humidity" class="col text-center"></h6>
+                    <h6 id="pressure" class="col text-center"></h6>
                 </div>
+                <div class="row">
+                    <h6 id="sunrise" class="col text-center"></h6>
+                    <h6 id="sunset" class="col text-center"></h6>
+                </div>
+                <div class="row">
+                    <h6 id="wind" class="col text-center"></h6>
+                    <h6 id="gust" class="col text-center"></h6>
+                </div>
+                <div class="row">
+                    <h6 id="clouds" class="col text-center"></h6>
+                    <h6 id="visibility" class="col text-center"></h6>
+                </div>
+                <!-- <div id="arimura" class="d-flex">
+                    <div class="yuuki" style="width: 100px;">
+                        <p>aaa</p>
+                        <p>bbb</p>
+                        <p>aaa</p>
+                        <p>bbb</p>
+                    </div>
+                    <div class="yuuki" style="width: 100px;">
+                        <p>aaa</p>
+                        <p>bbb</p>
+                        <p>aaa</p>
+                        <p>bbb</p>
+                    </div>
+                    <div class="yuuki" style="width: 100px;">
+                        <p>aaa</p>
+                        <p>bbb</p>
+                        <p>aaa</p>
+                        <p>bbb</p>
+                    </div>
+                    <div class="yuuki" style="width: 100px;">
+                        <p>aaa</p>
+                        <p>bbb</p>
+                        <p>aaa</p>
+                        <p>bbb</p>
+                    </div>
+                    <div class="yuuki" style="width: 100px;">
+                        <p>aaa</p>
+                        <p>bbb</p>
+                        <p>aaa</p>
+                        <p>bbb</p>
+                    </div>
+                    <div class="yuuki" style="width: 100px;">
+                        <p>aaa</p>
+                        <p>bbb</p>
+                        <p>aaa</p>
+                        <p>bbb</p>
+                    </div>
+                    <div class="yuuki" style="width: 100px;">
+                        <p>aaa</p>
+                        <p>bbb</p>
+                        <p>aaa</p>
+                        <p>bbb</p>
+                    </div>
+                    <div class="yuuki" style="width: 100px;">
+                        <p>aaa</p>
+                        <p>bbb</p>
+                        <p>aaa</p>
+                        <p>bbb</p>
+                    </div>
+                    <div class="yuuki" style="width: 100px;">
+                        <p>aaa</p>
+                        <p>bbb</p>
+                        <p>aaa</p>
+                        <p>bbb</p>
+                    </div>
+                    <div class="yuuki" style="width: 100px;">
+                        <p>aaa</p>
+                        <p>bbb</p>
+                        <p>aaa</p>
+                        <p>bbb</p>
+                    </div>
+                    <div class="yuuki" style="width: 100px;">
+                        <p>aaa</p>
+                        <p>bbb</p>
+                        <p>aaa</p>
+                        <p>bbb</p>
+                    </div>
+                </div> -->
             </div>
         </main>
         </div>
-    <div id="lists">
-    </div>
     <script src="main.js"></script>
 </body>
 </html>
