@@ -1,3 +1,4 @@
+'use strict'
 // async を付けることで非同期関数と呼ばれるようになる
 // async, await で fetch を使うと Response オブジェクトが帰ってくる
 
@@ -26,6 +27,34 @@ const weekly = document.getElementById("weekly");
 const arimura = document.getElementById("arimura");
 const yuuki = document.querySelector('.yuuki');
 const daylyWrap = document.querySelector('.dayly-wrap');
+
+// const zipinput = document.getElementById("zipinput");
+// const zipsearch = document.getElementById("zipsearch");
+// const citysearch = document.getElementById("citysearch");
+
+const menuItems = document.querySelectorAll('.menu li a')
+const contents = document.querySelectorAll('.content')
+
+menuItems.forEach(clickedItem => {
+    clickedItem.addEventListener('click', e => {
+        e.preventDefault()
+        // a 要素は通常画面遷移するので、e.preventDefault()とすることで画面遷移しなくなる
+
+        menuItems.forEach(item => {
+            item.classList.remove('active')
+            // クリックされていない要素から active class を取り除く
+        })
+
+        clickedItem.classList.add('active')
+        // クリックしたら active 要素を付ける
+
+        contents.forEach(content => {
+            content.classList.remove('active')
+            // クリックされていない要素から active class を取り除く
+        })
+        document.getElementById(clickedItem.dataset.id).classList.add('active')
+    })
+})
 
 // 郵便番号入力チェック
 function checkInput() {
@@ -228,6 +257,25 @@ window.addEventListener('load', () => {
     cityweekCall(cityData);
 })
 target.focus();
+
+// zipsearch.addEventListener('click', () => {
+//     if (zipinput.classList.contains('hidden') == true) {
+//         zipinput.classList.remove("hidden");
+//         select.classList.add("hidden");
+//     } else {
+//         zipinput.classList.add("hidden");
+//         select.classList.remove("hidden");
+//     }
+// })
+// citysearch.addEventListener('click', () => {
+//     if (select.classList.contains('hidden') == true) {
+//         select.classList.remove("hidden");
+//         zipinput.classList.add("hidden");
+//     } else {
+//         zipinput.classList.remove("hidden");
+//         select.classList.add("hidden");
+//     }
+// })
 
 // arimura.addEventListener('click', () => {
 //     clearweekData();
