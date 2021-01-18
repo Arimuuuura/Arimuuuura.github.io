@@ -28,13 +28,14 @@
                         <div class="row my-3">
                             <span class="col-1">〒</span>
                             <div class="col">
-                                <input type="number"" id="target" placeholder="100">
+                                <input type="tel"" id="target" placeholder="100">
                             </div>
                             <span>-</span>
                             <div class="col">
-                                <input type="number" id="target2" placeholder="0000">
+                                <input type="tel" id="target2" placeholder="0000">
                             </div>
                         </div>
+                        <h6 id="error" class="row px-3 mb-3 text-danger hidden">入力された郵便番号での検索はできません。他の番号を試してください。</h6>
                         <div class="row">
                             <div id="btn" class="col bg-primary mx-5 disabled">
                                 検索
@@ -120,6 +121,29 @@
                     <h6 id="max_temp" class="col text-danger text-center"></h6>
                     <h6 id="feel_temp" class="col text-success text-center"></h6>
                 </div>
+                <div class="row mt-3"> <!--最低、最高、体感温度-->
+                    <h6 id="" class="col"></h6>
+                    <h6 id="" class="col"></h6>
+                    <h6 id="details" class="col text-primary text-center">詳しく見る</h6>
+                </div>
+                <div id="weather-details" class="hidden">
+                    <div class="row"> <!--湿度、気圧、雲量、日の出、日の入り、風速、風向-->
+                        <h6 id="humidity" class="col text-center"></h6>
+                        <h6 id="pressure" class="col text-center"></h6>
+                    </div>
+                    <div class="row">
+                        <h6 id="sunrise" class="col text-center"></h6>
+                        <h6 id="sunset" class="col text-center"></h6>
+                    </div>
+                    <div class="row">
+                        <h6 id="wind" class="col text-center"></h6>
+                        <h6 id="gust" class="col text-center"></h6>
+                    </div>
+                    <div class="row">
+                        <h6 id="clouds" class="col text-center"></h6>
+                        <h6 id="visibility" class="col text-center"></h6>
+                    </div>
+                </div>
 
                 <div id="weekly" class="row my-4"> <!--5日分の天気-->
                     <div class="dayly-guide">
@@ -136,22 +160,7 @@
 
                 </div>
                 
-                <div class="row"> <!--湿度、気圧、雲量、日の出、日の入り、風速、風向-->
-                    <h6 id="humidity" class="col text-center"></h6>
-                    <h6 id="pressure" class="col text-center"></h6>
-                </div>
-                <div class="row">
-                    <h6 id="sunrise" class="col text-center"></h6>
-                    <h6 id="sunset" class="col text-center"></h6>
-                </div>
-                <div class="row">
-                    <h6 id="wind" class="col text-center"></h6>
-                    <h6 id="gust" class="col text-center"></h6>
-                </div>
-                <div class="row">
-                    <h6 id="clouds" class="col text-center"></h6>
-                    <h6 id="visibility" class="col text-center"></h6>
-                </div>
+                
                 <!-- <div id="arimura" class="d-flex">
                     <div class="yuuki" style="width: 100px;">
                         <p>aaa</p>

@@ -27,10 +27,9 @@ const weekly = document.getElementById("weekly");
 const arimura = document.getElementById("arimura");
 const yuuki = document.querySelector('.yuuki');
 const daylyWrap = document.querySelector('.dayly-wrap');
-
-// const zipinput = document.getElementById("zipinput");
-// const zipsearch = document.getElementById("zipsearch");
-// const citysearch = document.getElementById("citysearch");
+const details = document.getElementById('details');
+const weatherDetails = document.getElementById('weather-details');
+const error = document.getElementById('error');
 
 const menuItems = document.querySelectorAll('.menu li a')
 const contents = document.querySelectorAll('.content')
@@ -125,6 +124,10 @@ const weekHumidity = document.createElement("p");
 const weekWind = document.createElement("p");
 
 const getweekData = (weekapis) => {
+    if (weekapis.cod == 404) {
+        error.classList.remove("hidden");
+        return;
+    }
     for (let i=0; i<40; i++) {
         const div = document.createElement("div");
         const icon = weekapis.list[i].weather[0].icon;
@@ -173,6 +176,10 @@ const clearweekData = () => {
 }
 
 const getData = (apis) => {
+    if (apis.cod == 404) {
+        error.classList.remove("hidden");
+        return;
+    }
     const weatherArry = apis.weather[0];
     const mainArry = apis.main;
     const sysArry = apis.sys;
@@ -258,24 +265,15 @@ window.addEventListener('load', () => {
 })
 target.focus();
 
-// zipsearch.addEventListener('click', () => {
-//     if (zipinput.classList.contains('hidden') == true) {
-//         zipinput.classList.remove("hidden");
-//         select.classList.add("hidden");
-//     } else {
-//         zipinput.classList.add("hidden");
-//         select.classList.remove("hidden");
-//     }
-// })
-// citysearch.addEventListener('click', () => {
-//     if (select.classList.contains('hidden') == true) {
-//         select.classList.remove("hidden");
-//         zipinput.classList.add("hidden");
-//     } else {
-//         zipinput.classList.remove("hidden");
-//         select.classList.add("hidden");
-//     }
-// })
+details.addEventListener('click', () => {
+    if (weatherDetails.classList.contains('hidden') == true) {
+        weatherDetails.classList.remove("hidden");
+        details.textContent = "閉じる";
+    } else {
+        weatherDetails.classList.add("hidden");
+        details.textContent = "詳しく見る";
+    }
+})
 
 // arimura.addEventListener('click', () => {
 //     clearweekData();
