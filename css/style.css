@@ -63,6 +63,22 @@ span {
     margin: 0 auto;
 }
 
+.getweekly {
+    width: 40px;
+    height: 40px;
+    line-height: 40px;
+    margin: 0 auto;
+    text-align: center;
+    flex-basis: 0;
+    flex-grow: 1;
+    max-width: 100%;
+    padding: 0 15px;
+}
+
+.px-15 {
+    padding: 0 15px;
+}
+
 .dayly-wrap {
     display: flex;
     overflow: scroll;
