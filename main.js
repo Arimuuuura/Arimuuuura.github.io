@@ -108,8 +108,6 @@ async function cityCall(cityData) {
 async function weekcityApi(cityData) {
     const res = await window.fetch("https://api.openweathermap.org/data/2.5/forecast?id=" + cityData + "&appid=8f241f6e111e93a94a517a3c6477329e&lang=ja&units=metric");
     const api_ob = await res.json();
-    console.log(api_ob);
-    
     return api_ob;
 }
 async function cityweekCall(cityData) {
@@ -197,6 +195,9 @@ const getweekData = (weekapis) => {
 const clearweekData = () => {
     while (wrapdiv.firstChild) {
         wrapdiv.removeChild(wrapdiv.firstChild);
+    }
+    while (lists.firstChild) {
+        lists.removeChild(lists.firstChild);
     }
 }
 
@@ -301,8 +302,3 @@ details.addEventListener('click', () => {
         details.textContent = "詳しく見る";
     }
 })
-
-// arimura.addEventListener('click', () => {
-//     clearweekData();
-//     cityweekCall(1860825);
-// })
