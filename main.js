@@ -108,6 +108,8 @@ async function cityCall(cityData) {
 async function weekcityApi(cityData) {
     const res = await window.fetch("https://api.openweathermap.org/data/2.5/forecast?id=" + cityData + "&appid=8f241f6e111e93a94a517a3c6477329e&lang=ja&units=metric");
     const api_ob = await res.json();
+    console.log(api_ob);
+    
     return api_ob;
 }
 async function cityweekCall(cityData) {
@@ -117,11 +119,6 @@ async function cityweekCall(cityData) {
 
 
 const wrapdiv = document.createElement("div");
-const weekTime = document.createElement("p");
-const weekWeather = document.createElement("p");
-const weekTemp = document.createElement("p");
-const weekHumidity = document.createElement("p");
-const weekWind = document.createElement("p");
 
 const getweekData = (weekapis) => {
     if (weekapis.cod == 404) {
@@ -159,13 +156,41 @@ const getweekData = (weekapis) => {
             div.appendChild(this.weekWind);
             weekly.appendChild(wrapdiv);
         }
-        // if (daylyTime == 12) {
-        //     console.log(weekapis.list[i].weather[0].description);
-        //     console.log(Math.floor(weekapis.list[i].main.temp * 10) / 10);
-        //     lists.textContent = weekapis.list[i].weather[0].description;
-        //     this.tomorrow = document.createElement("p");
-        //     this.tomorrow.textContent = weekapis.list[i].weather[0].description;
-        // }
+        if (daylyTime == 12) {
+            const dateDiv = document.createElement("div");
+            dateDiv.classList.add("row");
+            // console.log(weekapis.list[i].weather[0].description);
+            // console.log(Math.floor(weekapis.list[i].main.temp * 10) / 10);
+            const getDay = new Date(weekapis.list[i].dt * 1000).getDay();
+            const dayOfWeek = ["日", "月", "火", "水", "木", "金", "土"][getDay];
+            this.weekDate = document.createElement("p");
+            this.weekDate.textContent = `${dayOfWeek}曜`;
+            this.weekDate.classList.add("getweekly");
+            dateDiv.appendChild(this.weekDate);
+
+            this.tomorrow = document.createElement("img");
+            this.tomorrow.classList.add('weeklyimg');
+            this.tomorrow.src = "http://openweathermap.org/img/wn/" + icon + "@2x.png";
+            this.tomorrow.classList.add("getweekly");
+            // this.tomorrow.classList.add("px-15");
+            dateDiv.appendChild(this.tomorrow);
+
+            this.pop = document.createElement("p");
+            this.pop.textContent = `${weekapis.list[i].pop * 100} %`;
+            this.pop.classList.add("getweekly");
+            dateDiv.appendChild(this.pop);
+
+            this.temp = document.createElement("p");
+            this.temp.textContent = `${Math.floor(weekapis.list[i].main.temp * 10) / 10}°C`;
+            this.temp.classList.add("getweekly");
+            dateDiv.appendChild(this.temp);
+
+            this.humidity = document.createElement("p");
+            this.humidity.textContent = `${weekapis.list[i].main.humidity} %`;
+            this.humidity.classList.add("getweekly");
+            dateDiv.appendChild(this.humidity);
+            lists.appendChild(dateDiv);
+        }
     }
 }
 
@@ -179,6 +204,8 @@ const getData = (apis) => {
     if (apis.cod == 404) {
         error.classList.remove("hidden");
         return;
+    } else {
+        error.classList.add("hidden");
     }
     const weatherArry = apis.weather[0];
     const mainArry = apis.main;
