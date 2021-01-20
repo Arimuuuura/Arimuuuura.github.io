@@ -24,8 +24,6 @@ const btn = document.getElementById("btn");
 const clear = document.getElementById("clear");
 const city = document.getElementById('city');
 const weekly = document.getElementById("weekly");
-const arimura = document.getElementById("arimura");
-const yuuki = document.querySelector('.yuuki');
 const daylyWrap = document.querySelector('.dayly-wrap');
 const details = document.getElementById('details');
 const weatherDetails = document.getElementById('weather-details');
@@ -33,6 +31,9 @@ const error = document.getElementById('error');
 
 const menuItems = document.querySelectorAll('.menu li a')
 const contents = document.querySelectorAll('.content')
+
+const arimura = document.getElementById("arimura");
+const yuuki = document.querySelector('.yuuki');
 
 menuItems.forEach(clickedItem => {
     clickedItem.addEventListener('click', e => {
@@ -123,10 +124,13 @@ const getweekData = (weekapis) => {
         error.classList.remove("hidden");
         return;
     }
+    console.log(weekapis.city);
+    console.log(weekapis);
+    console.log(new Date(weekapis.city.sunrise * 1000));
+    console.log(new Date(weekapis.city.sunset * 1000));
     for (let i=0; i<40; i++) {
         const div = document.createElement("div");
         const icon = weekapis.list[i].weather[0].icon;
-        // console.log(weekapis);
         const daylyTime = new Date(weekapis.list[i].dt * 1000).getHours();
         if (i<=8) {
             this.weekTime = document.createElement("p");
@@ -294,11 +298,18 @@ window.addEventListener('load', () => {
 target.focus();
 
 details.addEventListener('click', () => {
-    if (weatherDetails.classList.contains('hidden') == true) {
-        weatherDetails.classList.remove("hidden");
+    // weatherDetails.classList.add("test");
+    // details.textContent = "閉じる";
+    if (weatherDetails.classList.contains('test') == false) {
+        weatherDetails.classList.add("test");
         details.textContent = "閉じる";
     } else {
-        weatherDetails.classList.add("hidden");
+        weatherDetails.classList.remove("test");
         details.textContent = "詳しく見る";
     }
 })
+
+// yuuki.addEventListener("click", () => {
+//     alert('aaa');
+//     yuuki.classList.add('today');
+// })
