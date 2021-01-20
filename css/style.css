@@ -101,7 +101,7 @@ span {
     display: flex;
     flex-wrap: nowrap;
     justify-content: unset;
-    background: rgba(0, 128, 128, 0.2);
+    background: rgba(0, 128, 128, 0.3);
 }
 
 .arimura {
@@ -168,4 +168,44 @@ span {
     display: block;
     min-height: 150px;
     padding: 12px;
+}
+
+/* #arimura {
+    width: 300px;
+    height: 300px;
+    background: red;
+}
+
+.yuuki {
+    width: 100px;
+    height: 10px;
+    margin: 0 auto;
+    background: blue;
+}
+
+.today {
+    background: yellow;
+    height: 100px;
+    transition-delay: .2s;
+    transition-duration: .7s;
+} */
+
+#weather-details {
+    height: 0px;
+    opacity: 0;
+    transition-duration: .7s;
+}
+
+#weather-details.test {
+    height: 108px;
+    opacity: 1;
+    transition-duration: .7s;
+}
+
+footer>p {
+    padding: 8px;
+    font-size: 12px;
+    text-align: center;
+    border-top: 1px solid #999;
+    background: rgba(0, 128, 128, 0.3);
 }
