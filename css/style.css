@@ -102,6 +102,7 @@ span {
     flex-wrap: nowrap;
     justify-content: unset;
     background: rgba(0, 128, 128, 0.3);
+    /* pointer-events: none; */
 }
 
 .arimura {
@@ -194,6 +195,7 @@ span {
     height: 0px;
     opacity: 0;
     transition-duration: .7s;
+    pointer-events: none;
 }
 
 #weather-details.test {
