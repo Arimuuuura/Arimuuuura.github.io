@@ -6,6 +6,21 @@ body,p {
     max-width: 400px;
 }
 
+#target,#target2 {
+    font-size: 20px;
+    box-sizing: border-box;
+    padding: 10px;
+    width: 120px;
+    height: 40px;
+    border-radius: 5px;
+}
+
+span {
+    font-size: 20px;
+    line-height: 40px;
+    margin-bottom: 5px;
+}
+
 #btn,#clear {
     cursor: pointer;
     display: inline-block;
@@ -22,20 +37,6 @@ body,p {
     opacity: 0.3;
 }
 
-#target,#target2 {
-    font-size: 20px;
-    box-sizing: border-box;
-    padding: 10px;
-    width: 120px;
-    height: 40px;
-    border-radius: 5px;
-}
-
-span {
-    font-size: 20px;
-    line-height: 40px;
-    margin-bottom: 5px;
-}
 
 #city {
     margin-left: 20px;
@@ -46,93 +47,6 @@ span {
 #details:hover {
     cursor: pointer;
 }
-
-.content>h5 {
-    margin: 5px 0 20px 20px;
-}
-
-.hidden {
-    display: none;
-}
-
-.chach-img {
-    width: 50px;
-    height: 50px;
-}
-
-.weeklyimg {
-    width: 40px;
-    height: 40px;
-    line-height: 40px;
-    margin: 0 auto;
-}
-
-.getweekly {
-    width: 40px;
-    height: 40px;
-    line-height: 40px;
-    margin: 0 auto;
-    text-align: center;
-    flex-basis: 0;
-    flex-grow: 1;
-    max-width: 100%;
-    padding: 0 15px;
-}
-
-.px-15 {
-    padding: 0 15px;
-}
-
-.dayly-wrap {
-    display: flex;
-    overflow: scroll;
-    min-width: 50px;
-}
-
-.dayly-weather {
-    width: 50px;
-    margin: 0 10px;
-    text-align: center;
-}
-
-.guide>p {
-    width: 50px;
-    margin: 0 5px;
-    text-align: center;
-}
-
-#weekly {
-    display: flex;
-    flex-wrap: nowrap;
-    justify-content: unset;
-    background: rgba(0, 128, 128, 0.3);
-    /* pointer-events: none; */
-}
-
-.arimura {
-    display: flex;
-	flex-wrap: nowrap;
-	justify-content: unset;
-}
-
-.yuuki {
-    /* flex-wrap: nowrap; */
-    min-width: 30%;
-}
-
-/* .menu li a {
-    width: 100px;
-    display: inline-block;
-    text-align: center;
-    color: #333;
-    text-decoration: lawngreen;
-    border-radius: 4px 4px 0 0;
-} */
-
-/* .container {
-    margin: 30px auto;
-    width: 500px;
-} */
 
 .menu {
     list-style: none;
@@ -175,25 +89,59 @@ span {
     padding: 12px;
 }
 
-/* #arimura {
-    width: 300px;
-    height: 300px;
-    background: red;
+.content>h5 {
+    margin: 5px 0 20px 20px;
 }
 
-.yuuki {
-    width: 100px;
-    height: 10px;
+.chach-img {
+    width: 50px;
+    height: 50px;
+}
+
+.weeklyimg {
+    width: 40px;
+    height: 40px;
+    line-height: 40px;
     margin: 0 auto;
-    background: blue;
 }
 
-.today {
-    background: yellow;
-    height: 100px;
-    transition-delay: .2s;
-    transition-duration: .7s;
-} */
+.getweekly {
+    width: 40px;
+    height: 40px;
+    line-height: 40px;
+    margin: 0 auto;
+    text-align: center;
+    flex-basis: 0;
+    flex-grow: 1;
+    max-width: 100%;
+    padding: 0 15px;
+}
+
+.dayly-wrap {
+    display: flex;
+    overflow: scroll;
+    min-width: 50px;
+}
+
+.dayly-weather {
+    width: 50px;
+    margin: 0 10px;
+    text-align: center;
+}
+
+.guide>p {
+    width: 50px;
+    margin: 0 5px;
+    text-align: center;
+}
+
+#weekly {
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: unset;
+    background: rgba(0, 128, 128, 0.3);
+}
+
 
 #weather-details {
     height: 0px;
@@ -214,4 +162,8 @@ footer>p {
     text-align: center;
     /* border-top: 1px solid #999; */
     background: rgba(0, 128, 128, 0.3);
+}
+
+.hidden {
+    display: none;
 }
