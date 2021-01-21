@@ -18,8 +18,7 @@ const sunset = document.getElementById("sunset");
 const wind = document.getElementById("wind");
 const gust = document.getElementById("gust");
 const visibility = document.getElementById("visibility");
-const target = document.getElementById("target");
-const target2 = document.getElementById("target2");
+
 const btn = document.getElementById("btn");
 const clear = document.getElementById("clear");
 const city = document.getElementById('city');
@@ -29,25 +28,21 @@ const details = document.getElementById('details');
 const weatherDetails = document.getElementById('weather-details');
 const error = document.getElementById('error');
 
+
+// タブメニュー
 const menuItems = document.querySelectorAll('.menu li a')
 const contents = document.querySelectorAll('.content')
-
-const arimura = document.getElementById("arimura");
-const yuuki = document.querySelector('.yuuki');
 
 menuItems.forEach(clickedItem => {
     clickedItem.addEventListener('click', e => {
         e.preventDefault()
         // a 要素は通常画面遷移するので、e.preventDefault()とすることで画面遷移しなくなる
-
         menuItems.forEach(item => {
             item.classList.remove('active')
             // クリックされていない要素から active class を取り除く
         })
-
         clickedItem.classList.add('active')
         // クリックしたら active 要素を付ける
-
         contents.forEach(content => {
             content.classList.remove('active')
             // クリックされていない要素から active class を取り除く
@@ -56,19 +51,7 @@ menuItems.forEach(clickedItem => {
     })
 })
 
-// 郵便番号入力チェック
-function checkInput() {
-    // 正規表現で入力チェック
-    // 正規表現にマッチしなかったら null を返す
-    if (target.value.match(/^[1-9][0-9]{2}$/) !== null) {
-        target2.focus();
-        if (target2.value.match(/^[0-9]{4}$/) !== null) {
-            btn.classList.remove('disabled');
-        }
-    } else {
-        btn.classList.add('disabled');
-    }
-}
+
 
 // 郵便番号による現在の天気呼び出し
 async function zipcodeApi(zipData) {
@@ -124,10 +107,6 @@ const getweekData = (weekapis) => {
         error.classList.remove("hidden");
         return;
     }
-    console.log(weekapis.city);
-    console.log(weekapis);
-    console.log(new Date(weekapis.city.sunrise * 1000));
-    console.log(new Date(weekapis.city.sunset * 1000));
     for (let i=0; i<40; i++) {
         const div = document.createElement("div");
         const icon = weekapis.list[i].weather[0].icon;
@@ -161,8 +140,6 @@ const getweekData = (weekapis) => {
         if (daylyTime == 12) {
             const dateDiv = document.createElement("div");
             dateDiv.classList.add("row");
-            // console.log(weekapis.list[i].weather[0].description);
-            // console.log(Math.floor(weekapis.list[i].main.temp * 10) / 10);
             const getDay = new Date(weekapis.list[i].dt * 1000).getDay();
             const dayOfWeek = ["日", "月", "火", "水", "木", "金", "土"][getDay];
             this.weekDate = document.createElement("p");
@@ -172,13 +149,12 @@ const getweekData = (weekapis) => {
 
             this.tomorrow = document.createElement("img");
             this.tomorrow.classList.add('weeklyimg');
-            this.tomorrow.src = "http://openweathermap.org/img/wn/" + icon + "@2x.png";
             this.tomorrow.classList.add("getweekly");
-            // this.tomorrow.classList.add("px-15");
+            this.tomorrow.src = "http://openweathermap.org/img/wn/" + icon + "@2x.png";
             dateDiv.appendChild(this.tomorrow);
 
             this.pop = document.createElement("p");
-            this.pop.textContent = `${weekapis.list[i].pop * 100} %`;
+            this.pop.textContent = `${Math.floor(weekapis.list[i].pop * 100)} %`;
             this.pop.classList.add("getweekly");
             dateDiv.appendChild(this.pop);
 
@@ -188,20 +164,11 @@ const getweekData = (weekapis) => {
             dateDiv.appendChild(this.temp);
 
             this.humidity = document.createElement("p");
-            this.humidity.textContent = `${weekapis.list[i].main.humidity} %`;
+            this.humidity.textContent = `${Math.floor(weekapis.list[i].main.humidity)} %`;
             this.humidity.classList.add("getweekly");
             dateDiv.appendChild(this.humidity);
             lists.appendChild(dateDiv);
         }
-    }
-}
-
-const clearweekData = () => {
-    while (wrapdiv.firstChild) {
-        wrapdiv.removeChild(wrapdiv.firstChild);
-    }
-    while (lists.firstChild) {
-        lists.removeChild(lists.firstChild);
     }
 }
 
@@ -230,9 +197,9 @@ const getData = (apis) => {
     min_temp.textContent = `最低 ${Math.floor(mainArry.temp_min * 10) / 10} °C`;
     max_temp.textContent = `最高 ${Math.floor(mainArry.temp_max * 10) / 10} °C`;
     feel_temp.textContent = `体感 ${Math.floor(mainArry.feels_like * 10) / 10} °C`;
-    humidity.textContent = `湿度 ${mainArry.humidity} %`;
-    pressure.textContent = `気圧 ${mainArry.pressure} hPa`;
-    clouds.textContent = `雲量 ${cloud.all} %`;
+    humidity.textContent = `湿度 ${Math.floor(mainArry.humidity)} %`;
+    pressure.textContent = `気圧 ${Math.floor(mainArry.pressure)} hPa`;
+    clouds.textContent = `雲量 ${Math.floor(cloud.all)} %`;
     sunrise.textContent = `日の出 ${sunriseTime.getHours()}:${sunriseTime.getMinutes()}`;
     sunset.textContent = `日の入り ${sunsetTime.getHours()}:${sunsetTime.getMinutes()}`;
     visibility.textContent = `視程 ${view} m`;
@@ -256,25 +223,41 @@ const getData = (apis) => {
         wind.textContent = `北風 ${speed}`;
     }
     if (winds.gust != undefined) {
-        // gust.classList.remove('hidden');
         gust.textContent = `突風 ${winds.gust} m/s`;
     } else {
         gust.textContent = "突風情報なし";
     }
 }
 
-// 郵便番号の入力
+// 出力値のクリア
+const clearweekData = () => {
+    while (wrapdiv.firstChild) {
+        wrapdiv.removeChild(wrapdiv.firstChild);
+    }
+    while (lists.firstChild) {
+        lists.removeChild(lists.firstChild);
+    }
+}
+
+
+// 郵便番号の入力値の取得
+const target = document.getElementById("target");
+const target2 = document.getElementById("target2");
+// 郵便番号の入力中のイベント
 target.addEventListener('keyup', checkInput);
 target2.addEventListener('keyup', checkInput);
-
-city.addEventListener('change', () => {
-    const num = city.selectedIndex;
-    const cityData = city[num].value;
-    clearweekData();
-    cityCall(cityData);
-    cityweekCall(cityData);
-})
-
+// 郵便番号入力チェック
+function checkInput() {
+    // 正規表現で入力チェック。マッチしなかったら null を返す
+    if (target.value.match(/^[1-9][0-9]{2}$/) !== null) {
+        target2.focus();
+        if (target2.value.match(/^[0-9]{4}$/) !== null) {
+            btn.classList.remove('disabled');
+        }
+    } else {
+        btn.classList.add('disabled');
+    }
+}
 // 郵便番号の検索ボタンをクリックした時のイベント
 btn.addEventListener('click', () => {
     if (btn.classList.contains('disabled') == true) {
@@ -289,17 +272,27 @@ btn.addEventListener('click', () => {
 clear.addEventListener('click', () => {
     location.reload();
 })
+
+
+
+city.addEventListener('change', () => {
+    const num = city.selectedIndex;
+    const cityData = city[num].value;
+    clearweekData();
+    cityCall(cityData);
+    cityweekCall(cityData);
+})
+
+
 // ページを開いた際のイベント
 window.addEventListener('load', () => {
     const cityData = "1850144";
     cityCall(cityData);
     cityweekCall(cityData);
+    target.focus();
 })
-target.focus();
 
 details.addEventListener('click', () => {
-    // weatherDetails.classList.add("test");
-    // details.textContent = "閉じる";
     if (weatherDetails.classList.contains('test') == false) {
         weatherDetails.classList.add("test");
         details.textContent = "閉じる";
@@ -308,8 +301,3 @@ details.addEventListener('click', () => {
         details.textContent = "詳しく見る";
     }
 })
-
-// yuuki.addEventListener("click", () => {
-//     alert('aaa');
-//     yuuki.classList.add('today');
-// })
