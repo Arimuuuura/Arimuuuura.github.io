@@ -95,71 +95,70 @@
 
 
     // 指定場所の現在の天気を取得
-    const places = document.getElementById("places");
-    const img = document.getElementById("icon");
-    const weathers = document.getElementById("weathers");
-    const temp = document.getElementById("temp");
-    const min_temp = document.getElementById("min_temp");
-    const max_temp = document.getElementById("max_temp");
-    const feel_temp = document.getElementById("feel_temp");
-    const humidity = document.getElementById("humidity");
-    const pressure = document.getElementById("pressure");
-    const clouds = document.getElementById("clouds");
-    const sunrise = document.getElementById("sunrise");
-    const sunset = document.getElementById("sunset");
-    const visibility = document.getElementById("visibility");
-    const wind = document.getElementById("wind");
-    const gust = document.getElementById("gust");
+    const PLACES = document.getElementById("places");
+    const IMG = document.getElementById("icon");
+    const WEATHERS = document.getElementById("weathers");
+    const TEMP = document.getElementById("temp");
+    const MIN_TEMP = document.getElementById("min_temp");
+    const MAX_TEMP = document.getElementById("max_temp");
+    const FEEL_TEMP = document.getElementById("feel_temp");
+    const HUMIDITY = document.getElementById("humidity");
+    const PRESSURE = document.getElementById("pressure");
+    const CLOUDS = document.getElementById("clouds");
+    const SUNRISE = document.getElementById("sunrise");
+    const SUNSET = document.getElementById("sunset");
+    const VISIBILITY = document.getElementById("visibility");
+    const WIND = document.getElementById("wind");
+    const GUST = document.getElementById("gust");
     const getData = (apis) => {
         checkError(apis);
-        const weatherArry = apis.weather[0];
-        const mainArry = apis.main;
-        const sysArry = apis.sys;
-        const sunriseTime = new Date(sysArry.sunrise * 1000);
-        const sunsetTime = new Date(sysArry.sunset * 1000);
-        const winds = apis.wind;
-        const speed = `${Math.floor(winds.speed * 10) / 10} m/s`;
-        const place = apis.name;
-        const cloud = apis.clouds;
-        const view = apis.visibility;
+        const { clouds, main, name, sys, visibility, weather, wind } = apis;
+        const { all } = clouds;
+        const [{ description, icon }] = weather;
+        const { temp, temp_min, temp_max, feels_like, humidity, pressure } = main;
+        const { sunrise, sunset } = sys;
+        const { deg, gust, speed } = wind;
+        const sunriseTime = new Date(sunrise * 1000);
+        const sunsetTime = new Date(sunset * 1000);
+        const speeds = `${Math.floor(speed * 10) / 10} m/s`;
 
-        places.textContent = `${place}`;
-        img.src = "https://openweathermap.org/img/wn/" + weatherArry.icon + "@2x.png";
-        weathers.textContent = `${weatherArry.description}`;
-        temp.textContent = `${Math.floor(mainArry.temp * 10) / 10} °C`;
-        min_temp.textContent = `最低 ${Math.floor(mainArry.temp_min * 10) / 10} °C`;
-        max_temp.textContent = `最高 ${Math.floor(mainArry.temp_max * 10) / 10} °C`;
-        feel_temp.textContent = `体感 ${Math.floor(mainArry.feels_like * 10) / 10} °C`;
-        humidity.textContent = `湿度 ${Math.floor(mainArry.humidity)} %`;
-        pressure.textContent = `気圧 ${Math.floor(mainArry.pressure)} hPa`;
-        clouds.textContent = `雲量 ${Math.floor(cloud.all)} %`;
-        sunrise.textContent = `日の出 ${sunriseTime.getHours()}:${sunriseTime.getMinutes()}`;
-        sunset.textContent = `日の入り ${sunsetTime.getHours()}:${sunsetTime.getMinutes()}`;
-        visibility.textContent = `視程 ${view} m`;
-        if (winds.deg <= 30) {
-            wind.textContent = `北風 ${speed}`;
-        } else if (winds.deg <= 60) {
-            wind.textContent = `北東風 ${speed}`;
-        } else if (winds.deg <= 120) {
-            wind.textContent = `東風 ${speed}`;
-        } else if (winds.deg <= 150) {
-            wind.textContent = `南東風 ${speed}`;
-        } else if (winds.deg <= 210) {
-            wind.textContent = `南風 ${speed}`;
-        } else if (winds.deg <= 240) {
-            wind.textContent = `西風 ${speed}`;
-        } else if (winds.deg <= 300) {
-            wind.textContent = `西風 ${speed}`;
-        } else if (winds.deg <= 330) {
-            wind.textContent = `西風 ${speed}`;
+        PLACES.textContent = `${name}`;
+        IMG.src = "https://openweathermap.org/img/wn/" + icon + "@2x.png";
+        WEATHERS.textContent = `${description}`;
+        TEMP.textContent = `${Math.floor(temp * 10) / 10} °C`;
+        MIN_TEMP.textContent = `最低 ${Math.floor(temp_min * 10) / 10} °C`;
+        MAX_TEMP.textContent = `最高 ${Math.floor(temp_max * 10) / 10} °C`;
+        FEEL_TEMP.textContent = `体感 ${Math.floor(feels_like * 10) / 10} °C`;
+        HUMIDITY.textContent = `湿度 ${Math.floor(humidity)} %`;
+        PRESSURE.textContent = `気圧 ${Math.floor(pressure)} hPa`;
+        CLOUDS.textContent = `雲量 ${Math.floor(all)} %`;
+        SUNRISE.textContent = `日の出 ${sunriseTime.getHours()}:${sunriseTime.getMinutes()}`;
+        SUNSET.textContent = `日の入り ${sunsetTime.getHours()}:${sunsetTime.getMinutes()}`;
+        VISIBILITY.textContent = `視程 ${visibility} m`;
+        if (deg <= 30) {
+            WIND.textContent = `北風 ${speeds}`;
+        } else if (deg <= 60) {
+            WIND.textContent = `北東風 ${speeds}`;
+        } else if (deg <= 120) {
+            WIND.textContent = `東風 ${speeds}`;
+        } else if (deg <= 150) {
+            WIND.textContent = `南東風 ${speeds}`;
+        } else if (deg <= 210) {
+            WIND.textContent = `南風 ${speeds}`;
+        } else if (deg <= 240) {
+            WIND.textContent = `西風 ${speeds}`;
+        } else if (deg <= 300) {
+            WIND.textContent = `西風 ${speeds}`;
+        } else if (deg <= 330) {
+            WIND.textContent = `西風 ${speeds}`;
         } else {
-            wind.textContent = `北風 ${speed}`;
+            WIND.textContent = `北風 ${speeds}`;
         }
-        if (winds.gust != undefined) {
-            gust.textContent = `突風 ${winds.gust} m/s`;
-        } else {
-            gust.textContent = "突風情報なし";
-        }
+        gust != undefined ? (
+            GUST.textContent = `突風 ${gust} m/s`
+        ) : (
+            GUST.textContent = "突風情報なし"
+        )
     }
 
 
