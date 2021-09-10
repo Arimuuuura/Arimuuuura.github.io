@@ -21,7 +21,6 @@
         })
     })
 
-
     // async を付けることで非同期関数と呼ばれるようになる
     // async, await で fetch を使うと Response オブジェクトが帰ってくる
 
@@ -29,7 +28,7 @@
     async function zipcodeApi(zipData) {
         // 実際にAPIをたたく処理
         // fetch という window オブジェクトがあらかじめ持っている関数を使う
-        const res = await window.fetch("https://api.openweathermap.org/data/2.5/weather?zip=" + zipData + ",jp&appid=8f241f6e111e93a94a517a3c6477329e&lang=ja&units=metric");
+        const res = await window.fetch(`https://api.openweathermap.org/data/2.5/weather?zip=${zipData},jp&appid=8f241f6e111e93a94a517a3c6477329e&lang=ja&units=metric`);
         const api_ob = await res.json();
         return api_ob;
     }
@@ -38,10 +37,9 @@
         getData(apis);
     }
 
-
     // 郵便番号による週間天気の呼び出し
     async function weekzipApi(zipData) {
-        const res = await window.fetch("https://api.openweathermap.org/data/2.5/forecast?zip=" + zipData + ",jp&appid=8f241f6e111e93a94a517a3c6477329e&lang=ja&units=metric");
+        const res = await window.fetch(`https://api.openweathermap.org/data/2.5/forecast?zip=${zipData},jp&appid=8f241f6e111e93a94a517a3c6477329e&lang=ja&units=metric`);
         const api_ob = await res.json();
         return api_ob;
     }
@@ -50,10 +48,9 @@
         getweekData(weekapis);
     }
 
-
     // 都市指定による現在の天気呼び出し
     async function cityApi(cityData) {
-        const res = await window.fetch("https://api.openweathermap.org/data/2.5/weather?id=" + cityData + "&appid=8f241f6e111e93a94a517a3c6477329e&lang=ja&units=metric");
+        const res = await window.fetch(`https://api.openweathermap.org/data/2.5/weather?id=${cityData}&appid=8f241f6e111e93a94a517a3c6477329e&lang=ja&units=metric`);
         const api_ob = await res.json();
         return api_ob;
     }
@@ -63,10 +60,9 @@
         getData(apis);
     }
 
-
     // 都市指定による週間天気の呼び出し
     async function weekcityApi(cityData) {
-        const res = await window.fetch("https://api.openweathermap.org/data/2.5/forecast?id=" + cityData + "&appid=8f241f6e111e93a94a517a3c6477329e&lang=ja&units=metric");
+        const res = await window.fetch(`https://api.openweathermap.org/data/2.5/forecast?id=${cityData}&appid=8f241f6e111e93a94a517a3c6477329e&lang=ja&units=metric`);
         const api_ob = await res.json();
         return api_ob;
     }
@@ -74,7 +70,6 @@
         const weekapis = await weekcityApi(cityData);
         getweekData(weekapis);
     }
-
 
     // 郵便番号エラーチェック
     const error = document.getElementById('error');
@@ -92,7 +87,6 @@
             return;
         }
     }
-
 
     // 指定場所の現在の天気を取得
     const PLACES = document.getElementById("places");
@@ -128,7 +122,7 @@
         const sunsetTime = new Date(sunset * 1000);
 
         PLACES.textContent = `${name}`;
-        IMG.src = "https://openweathermap.org/img/wn/" + icon + "@2x.png";
+        IMG.src = `https://openweathermap.org/img/wn/${icon}@2x.png`;
         WEATHERS.textContent = `${description}`;
         TEMP.textContent = `${getValDecimal(temp)} °C`;
         MIN_TEMP.textContent = `最低 ${getValDecimal(temp_min)} °C`;
@@ -184,8 +178,8 @@
                 dayTime.textContent = `${new Date(dt * 1000).getHours()}時`;
                 // img を表示
                 const dayImg = document.createElement("img");
-                dayImg.classList.add('weeklyimg');
-                dayImg.src = "http://openweathermap.org/img/wn/" + icon + "@2x.png";
+                dayImg.classList.add('weekly-img');
+                dayImg.src = `http://openweathermap.org/img/wn/${icon}@2x.png`;
                 // 気温を表示
                 const dayTemp = document.createElement("p");
                 dayTemp.textContent = `${getValDecimal(temp)}°C`;
@@ -214,28 +208,28 @@
                 // 曜日を表示
                 const weekDate = document.createElement("p");
                 weekDate.textContent = `${dayOfWeek}曜`;
-                weekDate.classList.add("getweekly");
+                weekDate.classList.add("get-weekly");
                 dateDiv.appendChild(weekDate);
                 // img を表示
                 const weeklyImg = document.createElement("img");
-                weeklyImg.classList.add('weeklyimg');
-                weeklyImg.classList.add("getweekly");
+                weeklyImg.classList.add('weekly-img');
+                weeklyImg.classList.add("get-weekly");
                 weeklyImg.src = `http://openweathermap.org/img/wn/${icon}@2x.png`;
                 dateDiv.appendChild(weeklyImg);
                 // 降水確率を表示
                 const weeklyPop = document.createElement("p");
                 weeklyPop.textContent = `${getValInteger(pop * 100)} %`;
-                weeklyPop.classList.add("getweekly");
+                weeklyPop.classList.add("get-weekly");
                 dateDiv.appendChild(weeklyPop);
                 // 気温を表示
                 const weeklyTemp = document.createElement("p");
                 weeklyTemp.textContent = `${getValDecimal(temp)}°C`;
-                weeklyTemp.classList.add("getweekly");
+                weeklyTemp.classList.add("get-weekly");
                 dateDiv.appendChild(weeklyTemp);
                 // 湿度を表示
                 const weeklyHumidity = document.createElement("p");
                 weeklyHumidity.textContent = `${Math.floor(humidity)} %`;
-                weeklyHumidity.classList.add("getweekly");
+                weeklyHumidity.classList.add("get-weekly");
                 dateDiv.appendChild(weeklyHumidity);
                 lists.appendChild(dateDiv);
             }
@@ -251,7 +245,6 @@
             lists.removeChild(lists.firstChild);
         }
     }
-
 
     // 郵便番号の入力値の取得
     const btn = document.getElementById("btn");
@@ -287,12 +280,10 @@
         zipweekCall(zipData);
     })
 
-
     // クリアボタンをクリックした時のイベント
     clear.addEventListener('click', () => {
         location.reload();
     })
-
 
     // 都市指定のセレクトボックスで選択都市を変更して際のイベント
     const city = document.getElementById('city');
@@ -304,7 +295,6 @@
         cityweekCall(cityData);
     })
 
-
     // ページを開いた際のイベント
     window.addEventListener('load', () => {
         const cityData = "1850144";
@@ -313,16 +303,15 @@
         target.focus();
     })
 
-
     // 天気の詳細を見る時のイベント
     const details = document.getElementById('details');
     const weatherDetails = document.getElementById('weather-details');
     details.addEventListener('click', () => {
-        if (weatherDetails.classList.contains('test') == false) {
-            weatherDetails.classList.add("test");
+        if (weatherDetails.classList.contains('open') == false) {
+            weatherDetails.classList.add("open");
             details.textContent = "閉じる";
         } else {
-            weatherDetails.classList.remove("test");
+            weatherDetails.classList.remove("open");
             details.textContent = "詳しく見る";
         }
     })

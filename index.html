@@ -2,6 +2,7 @@
 <html lang="ja">
 <head>
     <meta charset="UTF-8">
+    <meta data-n-head="true" name="description" content="郵便番号または都道府県名を選択し、指定場所の現在の天気と5日分の予報を取得できるWebアプリです。" data-hid="description">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>WeatherAPI</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
@@ -12,9 +13,9 @@
 <body>
     <header>
         <div class="container my-4 d-flex">
-            <img class="chach-img" src="images/sun.png" alt="">
+            <img class="catch-img" src="images/sun.png" alt="">
             <h3 class="pt-2 mx-2">weather forecast</h3>
-            <img class="chach-img" src="images/star.png" alt="">
+            <img class="catch-img" src="images/star.png" alt="">
         </div>
     </header>
     <main>
@@ -151,7 +152,7 @@
                 <div class="dayly-guide">
                     <div class="guide">
                         <p>時間</p>
-                        <p class="weeklyimg">天気</p>
+                        <p class="weekly-img">天気</p>
                         <p>気温</p>
                         <p>湿度</p>
                         <p>風速</p>
@@ -171,7 +172,7 @@
         <div id="lists" class="container my-3"></div> <!--5日分の天気-->
     </main>
     <footer>
-        <p>COPYRIGHT &#169; Yuki Arimura ALL RIGHTS RESERVED. </p>
+        <p>&#169; Yuki Arimura ALL RIGHTS RESERVED.</p>
     </footer>
     <script src="main.js"></script>
 </body>
