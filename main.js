@@ -59,6 +59,7 @@
     }
     async function cityCall(cityData) {
         const apis = await cityApi(cityData);
+        console.log(apis);
         getData(apis);
     }
 
@@ -78,11 +79,17 @@
     // 郵便番号エラーチェック
     const error = document.getElementById('error');
     const checkError = (apis) => {
-        if (apis.cod == 404) {
+        const { cod } = apis;
+        if (cod == 200) {
+            error.classList.add("hidden");
+        } else if (cod == 404) {
+            error.innerText = "入力された郵便番号での検索はできません。他の番号を試してください。"
             error.classList.remove("hidden");
             return;
         } else {
-            error.classList.add("hidden");
+            error.innerText = "予期せぬエラーが発生しました。もう一度入力してください。"
+            error.classList.remove("hidden");
+            return;
         }
     }
 
