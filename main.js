@@ -56,7 +56,6 @@
     }
     async function cityCall(cityData) {
         const apis = await cityApi(cityData);
-        console.log(apis);
         getData(apis);
     }
 
