@@ -152,7 +152,7 @@
             WIND.textContent = `西風 ${speeds}`;
         } else if (deg <= 330) {
             WIND.textContent = `西風 ${speeds}`;
-        } else {
+        } else if (deg <= 360) {
             WIND.textContent = `北風 ${speeds}`;
         }
         gust != undefined ? ( GUST.textContent = `突風 ${getValDecimal(gust)} m/s` ) : ( GUST.textContent = "突風情報なし" );
@@ -232,7 +232,7 @@
                 weeklyHumidity.classList.add("get-weekly");
                 dateDiv.appendChild(weeklyHumidity);
                 lists.appendChild(dateDiv);
-            }
+            };
         })
     }
 
@@ -256,9 +256,7 @@
         // 正規表現で入力チェック。マッチしなかったら null を返す
         if (target.value.match(/^[1-9][0-9]{2}$/) !== null) {
             target2.focus();
-            if (target2.value.match(/^[0-9]{4}$/) !== null) {
-                btn.classList.remove('disabled');
-            }
+            target2.value.match(/^[0-9]{4}$/) !== null && btn.classList.remove('disabled');
         } else {
             btn.classList.add('disabled');
         }
@@ -271,9 +269,7 @@
     target2.addEventListener('keyup', checkInput);
     // 郵便番号の検索ボタンをクリックした時のイベント
     btn.addEventListener('click', () => {
-        if (btn.classList.contains('disabled') == true) {
-            return
-        }
+        if (btn.classList.contains('disabled') == true) return;
         const zipData = `${target.value}-${target2.value}`;
         clearweekData();
         zipCall(zipData);
