@@ -120,21 +120,27 @@
         const { deg, gust, speed } = wind;
         const sunriseTime = new Date(sunrise * 1000);
         const sunsetTime = new Date(sunset * 1000);
-        const speeds = `${Math.floor(speed * 10) / 10} m/s`;
+
+        // 小数点第一位を取得
+        const getValDecimal = (val) => Math.floor(val * 10) / 10;
+        // 整数を取得
+        const getValInteger = (val) => Math.floor(val);
 
         PLACES.textContent = `${name}`;
         IMG.src = "https://openweathermap.org/img/wn/" + icon + "@2x.png";
         WEATHERS.textContent = `${description}`;
-        TEMP.textContent = `${Math.floor(temp * 10) / 10} °C`;
-        MIN_TEMP.textContent = `最低 ${Math.floor(temp_min * 10) / 10} °C`;
-        MAX_TEMP.textContent = `最高 ${Math.floor(temp_max * 10) / 10} °C`;
-        FEEL_TEMP.textContent = `体感 ${Math.floor(feels_like * 10) / 10} °C`;
-        HUMIDITY.textContent = `湿度 ${Math.floor(humidity)} %`;
-        PRESSURE.textContent = `気圧 ${Math.floor(pressure)} hPa`;
-        CLOUDS.textContent = `雲量 ${Math.floor(all)} %`;
+        TEMP.textContent = `${getValDecimal(temp)} °C`;
+        MIN_TEMP.textContent = `最低 ${getValDecimal(temp_min)} °C`;
+        MAX_TEMP.textContent = `最高 ${getValDecimal(temp_max)} °C`;
+        FEEL_TEMP.textContent = `体感 ${getValDecimal(feels_like)} °C`;
+        HUMIDITY.textContent = `湿度 ${getValInteger(humidity)} %`;
+        PRESSURE.textContent = `気圧 ${getValInteger(pressure)} hPa`;
+        CLOUDS.textContent = `雲量 ${getValInteger(all)} %`;
         SUNRISE.textContent = `日の出 ${sunriseTime.getHours()}:${sunriseTime.getMinutes()}`;
         SUNSET.textContent = `日の入り ${sunsetTime.getHours()}:${sunsetTime.getMinutes()}`;
         VISIBILITY.textContent = `視程 ${visibility} m`;
+
+        const speeds = `${getValDecimal(speed)} m/s`;
         if (deg <= 30) {
             WIND.textContent = `北風 ${speeds}`;
         } else if (deg <= 60) {
@@ -154,11 +160,7 @@
         } else {
             WIND.textContent = `北風 ${speeds}`;
         }
-        gust != undefined ? (
-            GUST.textContent = `突風 ${gust} m/s`
-        ) : (
-            GUST.textContent = "突風情報なし"
-        )
+        gust != undefined ? ( GUST.textContent = `突風 ${getValDecimal(gust)} m/s` ) : ( GUST.textContent = "突風情報なし" );
     }
 
 
