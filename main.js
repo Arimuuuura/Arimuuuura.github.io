@@ -25,47 +25,47 @@
     // async, await で fetch を使うと Response オブジェクトが帰ってくる
 
     // 郵便番号による現在の天気呼び出し
-    async function zipcodeApi(zipData) {
+    const zipcodeApi = async (zipData) => {
         // 実際にAPIをたたく処理
         // fetch という window オブジェクトがあらかじめ持っている関数を使う
         const res = await window.fetch(`https://api.openweathermap.org/data/2.5/weather?zip=${zipData},jp&appid=8f241f6e111e93a94a517a3c6477329e&lang=ja&units=metric`);
         const api_ob = await res.json();
         return api_ob;
     }
-    async function zipCall(zipData) {
+    const zipCall = async (zipData) => {
         const apis = await zipcodeApi(zipData);
         getData(apis);
     }
 
     // 郵便番号による週間天気の呼び出し
-    async function weekzipApi(zipData) {
+    const weekzipApi = async (zipData) => {
         const res = await window.fetch(`https://api.openweathermap.org/data/2.5/forecast?zip=${zipData},jp&appid=8f241f6e111e93a94a517a3c6477329e&lang=ja&units=metric`);
         const api_ob = await res.json();
         return api_ob;
     }
-    async function zipweekCall(cityData) {
+    const zipweekCall = async (cityData) => {
         const weekapis = await weekzipApi(cityData);
         getweekData(weekapis);
     }
 
     // 都市指定による現在の天気呼び出し
-    async function cityApi(cityData) {
+    const cityApi = async (cityData) => {
         const res = await window.fetch(`https://api.openweathermap.org/data/2.5/weather?id=${cityData}&appid=8f241f6e111e93a94a517a3c6477329e&lang=ja&units=metric`);
         const api_ob = await res.json();
         return api_ob;
     }
-    async function cityCall(cityData) {
+    const cityCall = async (cityData) => {
         const apis = await cityApi(cityData);
         getData(apis);
     }
 
     // 都市指定による週間天気の呼び出し
-    async function weekcityApi(cityData) {
+    const weekcityApi = async (cityData) => {
         const res = await window.fetch(`https://api.openweathermap.org/data/2.5/forecast?id=${cityData}&appid=8f241f6e111e93a94a517a3c6477329e&lang=ja&units=metric`);
         const api_ob = await res.json();
         return api_ob;
     }
-    async function cityweekCall(cityData) {
+    const cityweekCall = async (cityData) => {
         const weekapis = await weekcityApi(cityData);
         getweekData(weekapis);
     }
