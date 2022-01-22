@@ -19,6 +19,7 @@
   "homepage": "https://github.com/y-arimura1222/weatherAPI#readme",
   "devDependencies": {
     "webpack": "^4.43.0",
-    "webpack-cli": "^3.3.11"
+    "webpack-cli": "^3.3.11",
+    "webpack-merge": "^5.0.9"
   }
 }
