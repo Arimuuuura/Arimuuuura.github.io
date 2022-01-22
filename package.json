@@ -1,0 +1,23 @@
+{
+  "name": "weatherapi",
+  "version": "1.0.0",
+  "description": "[\"OpenWeather mobile app\"](https://openweathermap.org/) のAPIを利用したお天気アプリ",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/y-arimura1222/weatherAPI.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/y-arimura1222/weatherAPI/issues"
+  },
+  "homepage": "https://github.com/y-arimura1222/weatherAPI#readme",
+  "devDependencies": {
+    "webpack": "^4.43.0",
+    "webpack-cli": "^3.3.11"
+  }
+}
