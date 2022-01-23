@@ -1,4 +1,6 @@
-'use strict';
+import '../scss/style.scss';
+
+('use strict');
 {
   // タブメニュー
   const menuItems = document.querySelectorAll('.menu li a');
