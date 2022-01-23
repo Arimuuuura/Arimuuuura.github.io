@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+	<meta charset="UTF-8">
+	<meta data-n-head="true" name="description" content="郵便番号または都道府県名を選択し、指定場所の現在の天気と5日分の予報を取得できるWebアプリです。" data-hid="description">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>WeatherAPI</title>
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+	<link rel="preconnect" href="https://fonts.gstatic.com">
+	<link href="https://fonts.googleapis.com/css2?family=Yusei+Magic&display=swap" rel="stylesheet">
+</head>
+<body>
+	<header>
+		<div class="container my-4 d-flex">
+			<img class="catch-img" src="../images/sun.png" alt="">
+			<h3 class="pt-2 mx-2">weather forecast</h3>
+			<img class="catch-img" src="../images/star.png" alt="">
+		</div>
+	</header>
+
+	<main>
+		<div class="container tab-menu"><!-- start tab menu -->
+			<div class="row px-3 my-4">
+				<ul class="menu list-unstyled d-flex">
+					<li><a href="#" class="active" data-id="a">郵便番号で検索</a></li>
+					<li><a href="#" data-id="b">都道府県で検索</a></li>
+				</ul>
+
+				<div class="content active" id="a">
+					<div class="row my-3">
+						<span class="col-1">〒</span>
+						<div class="col">
+							<input type="tel"" id="target" placeholder="100">
+						</div>
+						<span>-</span>
+						<div class="col">
+							<input type="tel" id="target2" placeholder="0000">
+						</div>
+					</div>
+					<h6 id="error" class="row px-3 mb-3 text-danger hidden"></h6>
+					<div class="row">
+						<div id="btn" class="col bg-primary mx-5 disabled">
+							検索
+						</div>
+						<div id="clear" class="col bg-success mr-5 disabled">クリア</div>
+					</div>
+				</div>
+
+				<div class="content" id="b">
+					<h5>都道府県を選択してください</h5>
+					<div id="select" class="mb-3">
+						<select name="" id="city">
+							<option value="1850144">未選択</option>
+							<option value="2130037">北海道</option>
+							<option value="2130656">青森</option>
+							<option value="2113124">秋田</option>
+							<option value="2112518">岩手</option>
+							<option value="2111888">宮城</option>
+							<option value="2110554">山形</option>
+							<option value="2112922">福島</option>
+							<option value="2112669">茨城</option>
+							<option value="1850310">栃木</option>
+							<option value="1863501">群馬</option>
+							<option value="1853226">埼玉</option>
+							<option value="1850144" selected>東京</option>
+							<option value="2113014">千葉</option>
+							<option value="1860291">神奈川</option>
+							<option value="1855429">新潟</option>
+							<option value="1849872">富山</option>
+							<option value="1861387">石川</option>
+							<option value="1863983">福井</option>
+							<option value="1848649">山梨</option>
+							<option value="1851715">静岡</option>
+							<option value="1856210">長野</option>
+							<option value="1863640">岐阜</option>
+							<option value="1865694">愛知</option>
+							<option value="1857907">京都府</option>
+							<option value="1853904">大阪府</option>
+							<option value="1852553">滋賀</option>
+							<option value="1857352">三重</option>
+							<option value="1855608">奈良</option>
+							<option value="1848938">和歌山</option>
+							<option value="1862047">兵庫</option>
+							<option value="1849890">鳥取</option>
+							<option value="1852442">島根</option>
+							<option value="1854381">岡山</option>
+							<option value="1862413">広島</option>
+							<option value="1848681">山口</option>
+							<option value="1860834">香川</option>
+							<option value="1850157">徳島</option>
+							<option value="1864226">愛媛</option>
+							<option value="1859133">高知</option>
+							<option value="1863958">福岡</option>
+							<option value="1854484">大分</option>
+							<option value="1853299">佐賀</option>
+							<option value="1856156">長崎</option>
+							<option value="1856710">宮崎</option>
+							<option value="1858419">熊本</option>
+							<option value="1860825">鹿児島</option>
+							<option value="1854345">沖縄</option>
+						</select>
+					</div>
+				</div>
+			</div>
+		</div><!-- finish tab menu -->
+
+		<div class="container">
+			<div class="row mx-auto pb-3"> <!--場所-->
+				<h3 id="places" class="mx-auto"></h3>
+			</div>
+
+			<div class="row">
+				<div class="col"></div>
+				<div class="col-4 mx-auto"> <!--天気-->
+					<h6 id="weathers" class="text-center"></h6>
+				</div>
+				<div class="col-4 mx-auto"> <!--気温-->
+					<h5 id="temp" class="text-center"></h5>
+				</div>
+				<div class="col"></div>
+			</div>
+
+			<div class="row" id="icon"> <!--アイコン-->
+			</div>
+
+			<div class="row"> <!--最低、最高、体感温度-->
+				<h6 id="min_temp" class="col text-primary text-center"></h6>
+				<h6 id="max_temp" class="col text-danger text-center"></h6>
+				<h6 id="feel_temp" class="col text-success text-center"></h6>
+			</div>
+
+			<div class="row mt-3"> <!--天気の詳細-->
+				<h6 id="" class="col"></h6>
+				<h6 id="" class="col"></h6>
+				<h6 id="details" class="col text-primary text-center">詳しく見る</h6>
+			</div>
+
+			<div id="weather-details">
+				<div class="row"> <!--湿度、気圧、雲量、日の出、日の入り、風速、風向-->
+					<h6 id="humidity" class="col text-center"></h6>
+					<h6 id="pressure" class="col text-center"></h6>
+				</div>
+				<div class="row">
+					<h6 id="sunrise" class="col text-center"></h6>
+					<h6 id="sunset" class="col text-center"></h6>
+				</div>
+				<div class="row">
+					<h6 id="wind" class="col text-center"></h6>
+					<h6 id="gust" class="col text-center"></h6>
+				</div>
+				<div class="row">
+					<h6 id="clouds" class="col text-center"></h6>
+					<h6 id="visibility" class="col text-center"></h6>
+				</div>
+			</div>
+		</div>
+
+		<div class="container">
+			<div id="every3hours" class="row my-4"> <!--24時間分の天気-->
+				<div class="dayly-guide">
+					<div class="guide">
+						<p>時間</p>
+						<p class="every3hours-img">天気</p>
+						<p>気温</p>
+						<p>湿度</p>
+						<p>風速</p>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="container">
+			<div class="row weekly-text">
+				<p class="col"></p>
+				<p class="col text-center">天気</p>
+				<p class="col text-center">降水</p>
+				<p class="col text-center">気温</p>
+				<p class="col text-center">湿度</p>
+			</div>
+		</div>
+
+		<div id="lists" class="container my-3"></div> <!--5日分の天気-->
+	</main>
+
+	<footer>
+		<p>&#169; Yuki Arimura ALL RIGHTS RESERVED.</p>
+	</footer>
+</body>
+</html>
