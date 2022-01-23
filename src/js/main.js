@@ -131,7 +131,9 @@ import '../scss/style.scss';
     const sunsetTime = new Date(sunset * 1000);
 
     PLACES.textContent = `${name}`;
-    IMG.src = `https://openweathermap.org/img/wn/${icon}@2x.png`;
+    const image = document.createElement('img');
+    image.src = `https://openweathermap.org/img/wn/${icon}@2x.png`;
+    IMG.appendChild(image);
     WEATHERS.textContent = `${description}`;
     TEMP.textContent = `${getValDecimal(temp)} °C`;
     MIN_TEMP.textContent = `最低 ${getValDecimal(temp_min)} °C`;
@@ -169,7 +171,7 @@ import '../scss/style.scss';
 
   // 指定場所の3時間ごと、5日分の天気を取得
   const wrapdiv = document.createElement('div');
-  const weekly = document.getElementById('weekly');
+  const every3hours = document.getElementById('every3hours');
   const lists = document.getElementById('lists');
   const getweekData = (weekapis) => {
     const { list } = weekapis;
@@ -187,7 +189,7 @@ import '../scss/style.scss';
         dayTime.textContent = `${new Date(dt * 1000).getHours()}時`;
         // img を表示
         const dayImg = document.createElement('img');
-        dayImg.classList.add('weekly-img');
+        dayImg.classList.add('every3hours-img');
         dayImg.src = `http://openweathermap.org/img/wn/${icon}@2x.png`;
         // 気温を表示
         const dayTemp = document.createElement('p');
@@ -206,7 +208,7 @@ import '../scss/style.scss';
         div.appendChild(dayTemp);
         div.appendChild(dayHumidity);
         div.appendChild(dayWind);
-        weekly.appendChild(wrapdiv);
+        every3hours.appendChild(wrapdiv);
       }
       // 取得データのうち時間が昼の12時のみを取得し表示
       if (daylyTime == 12) {
@@ -221,7 +223,7 @@ import '../scss/style.scss';
         dateDiv.appendChild(weekDate);
         // img を表示
         const weeklyImg = document.createElement('img');
-        weeklyImg.classList.add('weekly-img');
+        weeklyImg.classList.add('every3hours-img');
         weeklyImg.classList.add('get-weekly');
         weeklyImg.src = `http://openweathermap.org/img/wn/${icon}@2x.png`;
         dateDiv.appendChild(weeklyImg);
