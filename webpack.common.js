@@ -8,6 +8,19 @@ module.exports = {
 		path: path.resolve(__dirname, 'public'),
 		filename: 'js/main.[contenthash].js',
 	},
+	module: {
+		rules: [
+			{
+				enforce: 'pre',
+				test: /\.js$/,
+				exclude: /node_modules/,
+				loader: 'eslint-loader',
+				options: {
+					fix: true,
+				},
+			},
+		],
+	},
 	plugins: [
 		new CleanWebpackPlugin(),
 		new HtmlWebpackPlugin({
