@@ -133,6 +133,9 @@ import '../scss/style.scss';
     PLACES.textContent = `${name}`;
     const image = document.createElement('img');
     image.src = `https://openweathermap.org/img/wn/${icon}@2x.png`;
+    while (IMG.firstChild) {
+      IMG.removeChild(IMG.firstChild);
+    }
     IMG.appendChild(image);
     WEATHERS.textContent = `${description}`;
     TEMP.textContent = `${getValDecimal(temp)} °C`;
