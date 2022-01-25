@@ -1,11 +1,30 @@
 import '../scss/style.scss';
 import { tab } from './modules/tab';
 import { error } from './modules/error';
+import { weeklyWeather } from './modules/weeklyWeather';
+import { every3HoursWeather } from './modules/every3HoursWeather';
 const APPID = process.env.APPID;
 const CURRENT_WEATHER = process.env.CURRENT_WEATHER;
 const WEEKLY_WEATHER = process.env.WEEKLY_WEATHER;
 const LANG = process.env.LANG;
 const UNITS = process.env.UNITS;
+
+// 指定場所の現在の天気を取得
+const PLACES = document.getElementById('places');
+const IMG = document.getElementById('icon');
+const WEATHERS = document.getElementById('weathers');
+const TEMP = document.getElementById('temp');
+const MIN_TEMP = document.getElementById('min_temp');
+const MAX_TEMP = document.getElementById('max_temp');
+const FEEL_TEMP = document.getElementById('feel_temp');
+const HUMIDITY = document.getElementById('humidity');
+const PRESSURE = document.getElementById('pressure');
+const CLOUDS = document.getElementById('clouds');
+const SUNRISE = document.getElementById('sunrise');
+const SUNSET = document.getElementById('sunset');
+const VISIBILITY = document.getElementById('visibility');
+const WIND = document.getElementById('wind');
+const GUST = document.getElementById('gust');
 
 tab();
 
@@ -52,23 +71,6 @@ const cityweekCall = async (cityData) => {
   const weekapis = await weekcityApi(cityData);
   getweekData(weekapis);
 };
-
-// 指定場所の現在の天気を取得
-const PLACES = document.getElementById('places');
-const IMG = document.getElementById('icon');
-const WEATHERS = document.getElementById('weathers');
-const TEMP = document.getElementById('temp');
-const MIN_TEMP = document.getElementById('min_temp');
-const MAX_TEMP = document.getElementById('max_temp');
-const FEEL_TEMP = document.getElementById('feel_temp');
-const HUMIDITY = document.getElementById('humidity');
-const PRESSURE = document.getElementById('pressure');
-const CLOUDS = document.getElementById('clouds');
-const SUNRISE = document.getElementById('sunrise');
-const SUNSET = document.getElementById('sunset');
-const VISIBILITY = document.getElementById('visibility');
-const WIND = document.getElementById('wind');
-const GUST = document.getElementById('gust');
 
 // 小数点第一位を取得
 const getValDecimal = (val) => Math.floor(val * 10) / 10;
@@ -129,9 +131,8 @@ const getData = (apis) => {
 };
 
 // 指定場所の3時間ごと、5日分の天気を取得
-const wrapdiv = document.createElement('div');
-const every3hours = document.getElementById('every3hours');
 const lists = document.getElementById('lists');
+const wrapdiv = document.createElement('div');
 const getweekData = (weekapis) => {
   const { list } = weekapis;
   list.map((val, index) => {
@@ -139,69 +140,15 @@ const getweekData = (weekapis) => {
     const { temp, humidity } = main;
     const [{ icon }] = weather;
     const { speed } = wind;
-    const div = document.createElement('div');
+
     const daylyTime = new Date(dt * 1000).getHours();
     // 取得データのうち24時間分のみを表示
     if (index <= 8) {
-      // 時間を表示
-      const dayTime = document.createElement('p');
-      dayTime.textContent = `${new Date(dt * 1000).getHours()}時`;
-      // img を表示
-      const dayImg = document.createElement('img');
-      dayImg.classList.add('every3hours-img');
-      dayImg.src = `http://openweathermap.org/img/wn/${icon}@2x.png`;
-      // 気温を表示
-      const dayTemp = document.createElement('p');
-      dayTemp.textContent = `${getValDecimal(temp)}°C`;
-      // 湿度を表示
-      const dayHumidity = document.createElement('p');
-      dayHumidity.textContent = `${humidity}%`;
-      // 風速を表示
-      const dayWind = document.createElement('p');
-      dayWind.textContent = `${getValDecimal(speed)}m/s`;
-      wrapdiv.appendChild(div);
-      wrapdiv.classList.add('dayly-wrap');
-      div.classList.add('dayly-weather');
-      div.appendChild(dayTime);
-      div.appendChild(dayImg);
-      div.appendChild(dayTemp);
-      div.appendChild(dayHumidity);
-      div.appendChild(dayWind);
-      every3hours.appendChild(wrapdiv);
+      every3HoursWeather(dt, icon, getValDecimal, temp, humidity, speed, wrapdiv);
     }
     // 取得データのうち時間が昼の12時のみを取得し表示
     if (daylyTime == 12) {
-      const dateDiv = document.createElement('div');
-      dateDiv.classList.add('row');
-      const getDay = new Date(dt * 1000).getDay();
-      const dayOfWeek = ['日', '月', '火', '水', '木', '金', '土'][getDay];
-      // 曜日を表示
-      const weekDate = document.createElement('p');
-      weekDate.textContent = `${dayOfWeek}曜`;
-      weekDate.classList.add('get-weekly');
-      dateDiv.appendChild(weekDate);
-      // img を表示
-      const weeklyImg = document.createElement('img');
-      weeklyImg.classList.add('every3hours-img');
-      weeklyImg.classList.add('get-weekly');
-      weeklyImg.src = `http://openweathermap.org/img/wn/${icon}@2x.png`;
-      dateDiv.appendChild(weeklyImg);
-      // 降水確率を表示
-      const weeklyPop = document.createElement('p');
-      weeklyPop.textContent = `${getValInteger(pop * 100)} %`;
-      weeklyPop.classList.add('get-weekly');
-      dateDiv.appendChild(weeklyPop);
-      // 気温を表示
-      const weeklyTemp = document.createElement('p');
-      weeklyTemp.textContent = `${getValDecimal(temp)}°C`;
-      weeklyTemp.classList.add('get-weekly');
-      dateDiv.appendChild(weeklyTemp);
-      // 湿度を表示
-      const weeklyHumidity = document.createElement('p');
-      weeklyHumidity.textContent = `${Math.floor(humidity)} %`;
-      weeklyHumidity.classList.add('get-weekly');
-      dateDiv.appendChild(weeklyHumidity);
-      lists.appendChild(dateDiv);
+      weeklyWeather(dt, icon, getValInteger, pop, getValDecimal, temp, humidity, lists);
     }
   });
 };
