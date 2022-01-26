@@ -1,4 +1,6 @@
-export const weeklyWeather = (dt, icon, getValInteger, pop, getValDecimal, temp, humidity, lists) => {
+import { getValDecimal, getValInteger } from '../util/setValue';
+
+export const weeklyWeather = (dt, icon, pop, temp, humidity, lists) => {
   const dateDiv = document.createElement('div');
   dateDiv.classList.add('row');
   const getDay = new Date(dt * 1000).getDay();

@@ -1,4 +1,6 @@
-export const every3HoursWeather = (dt, icon, getValDecimal, temp, humidity, speed, wrapdiv) => {
+import { getValDecimal } from '../util/setValue';
+
+export const every3HoursWeather = (dt, icon, temp, humidity, speed, wrapdiv) => {
   const div = document.createElement('div');
   const every3hours = document.getElementById('every3hours');
   // 時間を表示
