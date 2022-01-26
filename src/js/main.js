@@ -1,7 +1,7 @@
 import '../scss/style.scss';
 import { tab } from './modules/tab/tab';
-import { weeklyWeather } from './modules/weather/weeklyWeather';
-import { every3HoursWeather } from './modules/weather/every3HoursWeather';
+import { getWeekData, clearWeekData } from './modules/data/getWeekData';
+
 import { getCurrentData } from './modules/data/getCurrentData';
 const APPID = process.env.APPID;
 const CURRENT_WEATHER = process.env.CURRENT_WEATHER;
@@ -30,7 +30,7 @@ const weekzipApi = async (zipData) => {
 };
 const zipweekCall = async (cityData) => {
   const weekapis = await weekzipApi(cityData);
-  getweekData(weekapis);
+  getWeekData(weekapis);
 };
 
 // 都市指定による現在の天気呼び出し
@@ -52,40 +52,7 @@ const weekcityApi = async (cityData) => {
 };
 const cityweekCall = async (cityData) => {
   const weekapis = await weekcityApi(cityData);
-  getweekData(weekapis);
-};
-
-// 指定場所の3時間ごと、5日分の天気を取得
-const lists = document.getElementById('lists');
-const wrapdiv = document.createElement('div');
-const getweekData = (weekapis) => {
-  const { list } = weekapis;
-  list.map((val, index) => {
-    const { dt, main, pop, weather, wind } = val;
-    const { temp, humidity } = main;
-    const [{ icon }] = weather;
-    const { speed } = wind;
-
-    const daylyTime = new Date(dt * 1000).getHours();
-    // 取得データのうち24時間分のみを表示
-    if (index <= 8) {
-      every3HoursWeather(dt, icon, temp, humidity, speed, wrapdiv);
-    }
-    // 取得データのうち時間が昼の12時のみを取得し表示
-    if (daylyTime == 12) {
-      weeklyWeather(dt, icon, pop, temp, humidity, lists);
-    }
-  });
-};
-
-// 出力値のクリア
-const clearweekData = () => {
-  while (wrapdiv.firstChild) {
-    wrapdiv.removeChild(wrapdiv.firstChild);
-  }
-  while (lists.firstChild) {
-    lists.removeChild(lists.firstChild);
-  }
+  getWeekData(weekapis);
 };
 
 // 郵便番号の入力値の取得
@@ -113,7 +80,7 @@ target2.addEventListener('keyup', checkInput);
 btn.addEventListener('click', () => {
   if (btn.classList.contains('disabled') == true) return;
   const zipData = `${target.value}-${target2.value}`;
-  clearweekData();
+  clearWeekData();
   zipCall(zipData);
   zipweekCall(zipData);
 });
@@ -128,7 +95,7 @@ const city = document.getElementById('city');
 city.addEventListener('change', () => {
   const num = city.selectedIndex;
   const cityData = city[num].value;
-  clearweekData();
+  clearWeekData();
   cityCall(cityData);
   cityweekCall(cityData);
 });
