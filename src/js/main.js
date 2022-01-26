@@ -1,59 +1,9 @@
 import '../scss/style.scss';
 import { tab } from './modules/tab/tab';
-import { getWeekData, clearWeekData } from './modules/data/getWeekData';
-
-import { getCurrentData } from './modules/data/getCurrentData';
-const APPID = process.env.APPID;
-const CURRENT_WEATHER = process.env.CURRENT_WEATHER;
-const WEEKLY_WEATHER = process.env.WEEKLY_WEATHER;
-const LANG = process.env.LANG;
-const UNITS = process.env.UNITS;
+import { clearWeekData } from './modules/data/getWeekData';
+import { getWeatherData } from './modules/api/fetchWeatherData';
 
 tab();
-
-// 郵便番号による現在の天気呼び出し
-const zipcodeApi = async (zipData) => {
-  const res = await window.fetch(`${CURRENT_WEATHER}?zip=${zipData},jp&appid=${APPID}&lang=${LANG}&units=${UNITS}`);
-  const api_ob = await res.json();
-  return api_ob;
-};
-const zipCall = async (zipData) => {
-  const apis = await zipcodeApi(zipData);
-  getCurrentData(apis);
-};
-
-// 郵便番号による週間天気の呼び出し
-const weekzipApi = async (zipData) => {
-  const res = await window.fetch(`${WEEKLY_WEATHER}?zip=${zipData},jp&appid=${APPID}&lang=${LANG}&units=${UNITS}`);
-  const api_ob = await res.json();
-  return api_ob;
-};
-const zipweekCall = async (cityData) => {
-  const weekapis = await weekzipApi(cityData);
-  getWeekData(weekapis);
-};
-
-// 都市指定による現在の天気呼び出し
-const cityApi = async (cityData) => {
-  const res = await window.fetch(`${CURRENT_WEATHER}?id=${cityData}&appid=${APPID}&lang=${LANG}&units=${UNITS}`);
-  const api_ob = await res.json();
-  return api_ob;
-};
-const cityCall = async (cityData) => {
-  const apis = await cityApi(cityData);
-  getCurrentData(apis);
-};
-
-// 都市指定による週間天気の呼び出し
-const weekcityApi = async (cityData) => {
-  const res = await window.fetch(`${WEEKLY_WEATHER}?id=${cityData}&appid=${APPID}&lang=${LANG}&units=${UNITS}`);
-  const api_ob = await res.json();
-  return api_ob;
-};
-const cityweekCall = async (cityData) => {
-  const weekapis = await weekcityApi(cityData);
-  getWeekData(weekapis);
-};
 
 // 郵便番号の入力値の取得
 const btn = document.getElementById('btn');
@@ -81,8 +31,7 @@ btn.addEventListener('click', () => {
   if (btn.classList.contains('disabled') == true) return;
   const zipData = `${target.value}-${target2.value}`;
   clearWeekData();
-  zipCall(zipData);
-  zipweekCall(zipData);
+  getWeatherData(zipData, '');
 });
 
 // クリアボタンをクリックした時のイベント
@@ -96,15 +45,13 @@ city.addEventListener('change', () => {
   const num = city.selectedIndex;
   const cityData = city[num].value;
   clearWeekData();
-  cityCall(cityData);
-  cityweekCall(cityData);
+  getWeatherData('', cityData);
 });
 
 // ページを開いた際のイベント
 window.addEventListener('load', () => {
   const cityData = '1850144';
-  cityCall(cityData);
-  cityweekCall(cityData);
+  getWeatherData('', cityData);
   target.focus();
 });
 
