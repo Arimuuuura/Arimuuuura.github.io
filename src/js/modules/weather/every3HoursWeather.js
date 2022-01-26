@@ -9,7 +9,7 @@ export const every3HoursWeather = (dt, icon, temp, humidity, speed, wrapdiv) => 
   // img を表示
   const dayImg = document.createElement('img');
   dayImg.classList.add('every3hours-img');
-  dayImg.src = `http://openweathermap.org/img/wn/${icon}@2x.png`;
+  dayImg.src = `https://openweathermap.org/img/wn/${icon}@2x.png`;
   // 気温を表示
   const dayTemp = document.createElement('p');
   dayTemp.textContent = `${getValDecimal(temp)}°C`;

@@ -14,7 +14,7 @@ export const weeklyWeather = (dt, icon, pop, temp, humidity, lists) => {
   const weeklyImg = document.createElement('img');
   weeklyImg.classList.add('every3hours-img');
   weeklyImg.classList.add('get-weekly');
-  weeklyImg.src = `http://openweathermap.org/img/wn/${icon}@2x.png`;
+  weeklyImg.src = `https://openweathermap.org/img/wn/${icon}@2x.png`;
   dateDiv.appendChild(weeklyImg);
   // 降水確率を表示
   const weeklyPop = document.createElement('p');
