@@ -8,7 +8,7 @@
 * ３時間ごとの天気
 * 5日分の予報を知ることができます
 
-[こちら](https://y-arimura1222.github.io/)をクリックでお楽しみいただけます
+[こちら](https://arimuuuura.github.io/)をクリックでお楽しみいただけます
 
 Enjoy JavaScript API simulation!
 
